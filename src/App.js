@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import "./App.css";
+import { Steps, Popover } from "antd";
+const { Step } = Steps;
+const customDot = (dot, { status, index }) => (
+  <Popover
+    content={
+      <span>
+        step {index} status: {status}
+      </span>
+    }
+  >
+    {dot}
+  </Popover>
+);
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
-}
-
+const App = () => (
+  <>
+    <Steps current={2} progressDot={customDot}>
+      <Step title="Finished" description="You can hover on the dot." />
+      <Step title="In Progress" description="You can hover on the dot." />
+      <Step title="Waiting" description="You can hover on the dot." />
+      <Step title="Waiting" description="You can hover on the dot." />
+    </Steps>
+  </>
+);
 export default App;
