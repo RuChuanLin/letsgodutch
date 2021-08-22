@@ -1,0 +1,1 @@
+export const RECORDS__ADD_RECORD = 'RECORDS__ADD_RECORD'
