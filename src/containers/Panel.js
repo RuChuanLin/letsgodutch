@@ -6,6 +6,10 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateFocusRecord } from "../actions/focusRecordAction";
 import { addNewRecord } from "../actions/recordsAction";
 
+import { recordDB } from "../firebase";
+
+import moment from "moment";
+
 const { Option } = Select;
 
 const onFinish = (values) => {
@@ -18,14 +22,14 @@ const onFinishFailed = (errorInfo) => {
 const Panel = () => {
   const [form] = Form.useForm();
 
-  const record = useSelector((state) => state.focusRecord); 
+  const record = useSelector((state) => state.focusRecord);
   const dispatch = useDispatch();
   return (
     <div>
       <Modal
         title="新增一筆資料"
         okFunction={() => {
-          dispatch(addNewRecord(record));
+          recordDB.add(record).then(() => dispatch(addNewRecord(record)));
         }}
       >
         <Form
@@ -42,8 +46,14 @@ const Panel = () => {
         >
           <Form.Item label="DatePicker">
             <DatePicker
-              value={record?.date}
-              onChange={(e) => dispatch(updateFocusRecord({ date: e }))}
+              value={moment(record?.date)}
+              onChange={(e) =>
+                dispatch(
+                  updateFocusRecord({
+                    date: e ? e.valueOf() : moment().valueOf(),
+                  })
+                )
+              }
             />
           </Form.Item>
           <Form.Item
@@ -57,8 +67,9 @@ const Panel = () => {
               style={{ width: "100%" }}
               placeholder="Please select"
               onChange={(payer) => {
-                dispatch(updateFocusRecord({ payer}))}}
-                value={record?.payer}
+                dispatch(updateFocusRecord({ payer }));
+              }}
+              value={record?.payer}
             >
               {["River", "Jill", "Tony", "Gary"].map((name) => (
                 <Option key={name}>{name}</Option>

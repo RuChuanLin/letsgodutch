@@ -1,9 +1,14 @@
 import { Table } from "antd";
+import { useEffect } from "react";
 import { useSelector } from "react-redux";
+
+import { recordDB } from "../firebase";
+
+import { useList } from "react-firebase-hooks/database";
 
 const generateColumns = (events) => {
   const totalCostAmount = generateTotalCostAmount(events);
-  console.log(totalCostAmount)
+  console.log(totalCostAmount);
   const participants = Object.keys(totalCostAmount);
   return [
     {
@@ -71,10 +76,9 @@ const generateTotalCostAmount = (events) =>
   }, {});
 
 const DataTable = () => {
+  
   const records = useSelector((state) => state.records);
-  console.log(records);
   const columns = generateColumns(records);
-  console.log(columns)
   const dataSource = generateDataSource(records);
   return (
     <>

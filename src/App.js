@@ -1,56 +1,24 @@
 import DataTable from "./containers/DataTable";
 import Panel from "./containers/Panel";
 
-import TestFireBase from './components/TestFireBase';
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 
-const events = [
-  {
-    date: new Date(),
-    participants: {
-      River: { cost: 130 },
-      Jill: { cost: 130 },
-      Tony: { cost: 130 },
-      Gary: { cost: 130 },
-    },
-    delivery: {
-      fee: 29,
-    },
-    payer: "River",
-  },
-  {
-    date: new Date(),
-    participants: {
-      River: { cost: 115 },
-      Jill: { cost: 110 },
-      Tony: { cost: 110 },
-      Gary: { cost: 110 },
-    },
-    delivery: {
-      fee: 19,
-    },
-    payer: "River",
-  },
-  {
-    date: new Date(),
-    participants: {
-      River: { cost: 100 },
-      Jill: { cost: 200 },
-      Tony: { cost: 300 },
-      Gary: { cost: 400 },
-    },
-    delivery: {
-      fee: 0,
-    },
-    payer: "Jill",
-  },
-];
+import TestFireBase from "./components/TestFireBase";
+import { fetchAllRecords } from "./actions/recordsAction"; 
+
 
 const App = () => {
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchAllRecords())
+  });
+
   return (
     <>
-    <TestFireBase></TestFireBase>
-      {/* <Panel></Panel>
-      <DataTable events={events}></DataTable> */}
+      {/* <TestFireBase></TestFireBase> */}
+      <Panel></Panel>
+      <DataTable ></DataTable>
     </>
   );
 };
