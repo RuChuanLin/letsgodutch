@@ -1,6 +1,8 @@
 import DataTable from "./containers/DataTable";
 import Panel from "./containers/Panel";
 
+import TestFireBase from './components/TestFireBase';
+
 const events = [
   {
     date: new Date(),
@@ -46,8 +48,9 @@ const events = [
 const App = () => {
   return (
     <>
-      <Panel></Panel>
-      <DataTable events={events}></DataTable>
+    <TestFireBase></TestFireBase>
+      {/* <Panel></Panel>
+      <DataTable events={events}></DataTable> */}
     </>
   );
 };
