@@ -7,7 +7,7 @@ const initialState = [];
 const reducer = (state = initialState, action) => {
   switch (action.type) {
     case RECORDS__ADD_RECORD:
-      return [...state, action.payload];
+      return [action.payload, ...state];
     case RECORDS__LOAD_ALL_RECORD:
       return [...action.payload];
     default:

@@ -6,7 +6,7 @@ import { recordDB } from "../firebase";
 
 export const fetchAllRecords = () => (dispatch, getState) => {
   //   const { counter } = getState();
-  recordDB.get().then((snapshots) => {
+  recordDB.orderBy('date', 'desc').get().then((snapshots) => {
     const allRecords = snapshots.docs.map((snapshot) => snapshot.data());
     console.log(allRecords)
     dispatch({ type: RECORDS__LOAD_ALL_RECORD, payload: allRecords });

@@ -1,10 +1,7 @@
-import { Table } from "antd";
-import { useEffect } from "react";
+import { Table } from "antd"; 
 import { useSelector } from "react-redux";
-
-import { recordDB } from "../firebase";
-
-import { useList } from "react-firebase-hooks/database";
+ 
+import moment from 'moment'
 
 const generateColumns = (events) => {
   const totalCostAmount = generateTotalCostAmount(events);
@@ -42,7 +39,7 @@ const generateDataSource = (events) => {
     const deliveryFee = delivery.fee;
     return {
       key: `${i + 1}`,
-      date,
+      date : moment(date).format('M / D'),
       payer,
       ...Object.entries(participants).reduce(
         (acc, [name, cost]) => ({
