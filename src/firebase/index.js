@@ -1,3 +1,4 @@
 import firebase from "./init";
 
-export const recordDB = firebase.collection("records");
+export const getRecordDB = () => firebase.collection("records");
+export const getUserDB = () => firebase.collection("users");

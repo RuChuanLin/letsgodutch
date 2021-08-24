@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button } from "antd";
 
-const CustomModal = ({title, okFunction, children}) => {
+const CustomModal = ({buttonTitle = 'Open Modal', title, okFunction, children}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -20,7 +20,7 @@ const CustomModal = ({title, okFunction, children}) => {
   return (
     <>
       <Button type="primary" onClick={showModal}>
-        Open Modal
+        {buttonTitle}
       </Button>
       <Modal
         title={title}
