@@ -1,5 +1,6 @@
 import DataTable from "./containers/DataTable";
 import Panel from "./containers/Panel";
+import TestModal from "./components/TestModal";
 
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
@@ -16,6 +17,7 @@ const App = () => {
 
   return (
     <>
+      <TestModal></TestModal>
       <Panel></Panel>
       <DataTable></DataTable>
     </>
