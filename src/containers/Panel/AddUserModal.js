@@ -14,7 +14,10 @@ const AddUserModal = () => {
     <Modal
       buttonTitle="新增使用者"
       title="新增使用者"
-      okFunction={() => dispatch(addUser({ userName }))}
+      okFunction={() => {
+        dispatch(addUser({ userName }));
+        setUserName("");
+      }}
     >
       <Form>
         <Form.Item
