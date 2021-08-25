@@ -87,7 +87,7 @@ const DataTable = () => {
       <Table
         dataSource={dataSource}
         columns={columns}
-        scroll={{ y: 240 }}
+        scroll={{ y: 500 }}
       ></Table>
     </>
   );
