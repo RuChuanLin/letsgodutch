@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+<<<<<<< HEAD
 import { Modal, Button, Carousel } from "antd";
 
 const CustomModal = ({
@@ -7,6 +8,11 @@ const CustomModal = ({
   okFunction,
   children,
 }) => {
+=======
+import { Modal, Button } from "antd";
+
+const CustomModal = ({buttonTitle = 'Open Modal', title, okFunction, children}) => {
+>>>>>>> efc7147 (createTEstButton)
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -14,13 +20,18 @@ const CustomModal = ({
   };
 
   const handleOk = () => {
+<<<<<<< HEAD
     okFunction();
+=======
+    okFunction()
+>>>>>>> efc7147 (createTEstButton)
     setIsModalVisible(false);
   };
 
   const handleCancel = () => {
     setIsModalVisible(false);
   };
+<<<<<<< HEAD
   const contentStyle = {
     height: "160px",
     color: "#fff",
@@ -31,6 +42,8 @@ const CustomModal = ({
   function onChange(a, b, c) {
     console.log(a, b, c);
   }
+=======
+>>>>>>> efc7147 (createTEstButton)
 
   return (
     <>
@@ -43,6 +56,7 @@ const CustomModal = ({
         footer={[]}
         onCancel={handleCancel}
       >
+<<<<<<< HEAD
         <Carousel afterChange={onChange}>
           <div>
             <h3 style={contentStyle}>1</h3>
@@ -57,6 +71,9 @@ const CustomModal = ({
             <h3 style={contentStyle}>4</h3>
           </div>
         </Carousel>
+=======
+       {children}
+>>>>>>> efc7147 (createTEstButton)
       </Modal>
     </>
   );
