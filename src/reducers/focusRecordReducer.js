@@ -3,6 +3,14 @@ import { FOCUS_RECORD__UPDATE_RECORD } from "../constants/focusRecordConst";
 
 const initialState = {
   date: moment().valueOf(),
+  delivery: {
+    fee: 0,
+  },
+  discount: {
+    amount: 0,
+  },
+  participants: {},
+  payer: "",
 };
 
 const reducer = (state = initialState, action) => {

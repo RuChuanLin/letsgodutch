@@ -1,11 +1,10 @@
-import { Table } from "antd"; 
+import { Table } from "antd";
 import { useSelector } from "react-redux";
- 
-import moment from 'moment'
+
+import moment from "moment";
 
 const generateColumns = (events) => {
   const totalCostAmount = generateTotalCostAmount(events);
-  console.log(totalCostAmount);
   const participants = Object.keys(totalCostAmount);
   return [
     {
@@ -15,6 +14,7 @@ const generateColumns = (events) => {
     },
     { title: "付款人", dataIndex: "payer", key: "payer" },
     { title: "運費", dataIndex: "deliveryFee", key: "deliveryFee" },
+    { title: "優惠", dataIndex: "discountAmount", key: "discountAmount" },
     ...participants.map((participant) => {
       const lowerCaseName = participant.toLocaleLowerCase();
       return {
@@ -35,12 +35,14 @@ const generateColumns = (events) => {
 
 const generateDataSource = (events) => {
   return events.map((event, i) => {
-    const { date, participants, payer, delivery } = event;
-    const deliveryFee = delivery.fee;
+    const { date, participants, payer, delivery, discount } = event;
+    const deliveryFee = delivery?.fee || 0;
+    const discountAmount = discount?.amount || 0;
     return {
       key: `${i + 1}`,
-      date : moment(date).format('M / D'),
+      date: moment(date).format("M / D"),
       payer,
+      discountAmount,
       ...Object.entries(participants).reduce(
         (acc, [name, cost]) => ({
           ...acc,
@@ -51,21 +53,24 @@ const generateDataSource = (events) => {
       deliveryFee,
       totalAmount: Object.entries(participants).reduce(
         (acc, [_, cost]) => acc + cost,
-        deliveryFee
+        deliveryFee - discountAmount
       ),
     };
   });
 };
 
 const generateTotalCostAmount = (events) =>
-  events.reduce((acc, { participants, payer, delivery }) => {
-    const deliveryFee = delivery.fee;
-    const averageDeliveryFee = deliveryFee / Object.keys(participants).length;
-    let totalAmount = deliveryFee;
-    console.log(participants);
+  events.reduce((acc, { participants, payer, delivery, discount }) => {
+    if (Object.keys(participants).length === 0) {
+      return acc;
+    }
+    const deliveryFee = delivery?.fee || 0;
+    const discountAmount = discount?.amount || 0;
+    const initValue = deliveryFee - discountAmount;
+    const averageDeliveryFee = initValue / Object.keys(participants).length;
+    let totalAmount = initValue;
     Object.entries(participants).forEach(([name, cost]) => {
-      acc[name] = acc[name] || 0;
-      acc[name] -= cost + averageDeliveryFee;
+      acc[name] = (acc[name] || 0) - cost - averageDeliveryFee;
       totalAmount += cost;
     });
     acc[payer] += totalAmount;
@@ -73,7 +78,7 @@ const generateTotalCostAmount = (events) =>
   }, {});
 
 const DataTable = () => {
-  
+  ;
   const records = useSelector((state) => state.records);
   const columns = generateColumns(records);
   const dataSource = generateDataSource(records);

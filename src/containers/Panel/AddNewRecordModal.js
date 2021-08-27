@@ -127,6 +127,29 @@ const AddNewRecordModal = () => {
             placeholder="點餐金額，不輸入代表沒點餐"
           />
         </Form.Item>
+        <Form.Item
+          label="優惠"
+          rules={[
+            {
+              message: "優惠",
+            },
+          ]}
+        >
+          <Input
+            type="number"
+            value={record?.discount?.amount || 0}
+            onChange={(e) => {
+              dispatch(
+                updateFocusRecord({
+                  discount: {
+                    amount: +e.target.value,
+                  },
+                })
+              );
+            }}
+            placeholder="優惠金額，不輸入代表沒優惠"
+          />
+        </Form.Item>
       </Form>
     </Modal>
   );
