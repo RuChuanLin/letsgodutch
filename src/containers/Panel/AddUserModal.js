@@ -36,7 +36,7 @@ const AddUserModal = () => {
           />
         </Form.Item>
         <Select style={{ width: 150 }}>
-          {users.map(({ name }) => (
+          {Object.entries(users).map(([name]) => (
             <Option key={name}>{name}</Option>
           ))}
         </Select>

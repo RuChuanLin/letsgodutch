@@ -4,24 +4,29 @@ import { getUserDB } from "../firebase";
 export const fetchAllUsers =
   ({ force } = {}) =>
   (dispatch, getState) => {
-    const { users = [] } = getState();
-    if (users.length === 0 || force) {
+    const { users = {} } = getState();
+    if (Object.keys(users).length === 0 || force) {
       getUserDB()
         .get()
         .then((snapshots) => {
-          const allUsers = snapshots.docs.map((snapshot) => snapshot.data());
-          dispatch({ type: USER__LOAD_ALL_USERS, payload: allUsers });
+          const userObject = snapshots.docs
+            .map((snapshot) => snapshot.data())
+            .reduce((acc, cur) => ({ ...acc, [cur.name]: {} }), {});
+          dispatch({ type: USER__LOAD_ALL_USERS, payload: userObject });
         });
-    } else {
-      dispatch({ type: USER__LOAD_ALL_USERS, payload: users });
     }
   };
 
 export const addUser =
   ({ userName } = {}) =>
   (dispatch, getState) => {
+    console.log(getState());
     if (userName) {
-      const nameObject = { name: userName };
+      const nameObject = {
+        [userName]: {
+          newRecordStatus: { selected: false, targeted: false },
+        },
+      };
       getUserDB()
         .add(nameObject)
         .then(() => {

@@ -14,7 +14,7 @@ export const fetchAllRecords =
         .get()
         .then((snapshots) => {
           const allRecords = snapshots.docs.map((snapshot) => snapshot.data());
-          console.log(allRecords);
+          console.log(allRecords)
           dispatch({ type: RECORDS__LOAD_ALL_RECORD, payload: allRecords });
         });
     } else {

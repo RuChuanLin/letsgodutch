@@ -1,23 +1,22 @@
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchAllRecords } from "./actions/recordAction";
+import { fetchFocusRecord } from "./actions/focusRecordAction";
+import { fetchAllUsers } from "./actions/userAction";
+
 import DataTable from "./containers/DataTable";
 import Panel from "./containers/Panel";
-import TestModal from "./components/TestModal";
-
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
-
-import { fetchAllRecords } from "./actions/recordAction";
-import { fetchAllUsers } from "./actions/userAction";
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
+    dispatch(fetchFocusRecord());
     dispatch(fetchAllRecords());
     dispatch(fetchAllUsers());
-  });
+  }, []);
 
   return (
     <>
-      <TestModal></TestModal>
       <Panel></Panel>
       <DataTable></DataTable>
     </>
