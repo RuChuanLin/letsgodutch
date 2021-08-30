@@ -3,7 +3,7 @@ import React, { useRef } from "react";
 import StepCarouselModal from "../../../components/StepCarouselModal";
 
 import SelectParticipants from "./SelectParticipants";
-import TestPage from "./TestPage";
+import RecordCost from "./RecordCost";
 
 const AddNewRecordModal = () => {
   const receiveChildValue = (value) => {
@@ -11,14 +11,14 @@ const AddNewRecordModal = () => {
   };
 
   const selectParticipantRef = useRef();
-  const TestPageRef = useRef();
+  const RecordCostRef = useRef();
 
   const components = [
     <SelectParticipants ref={selectParticipantRef}></SelectParticipants>,
-    <TestPage ref={TestPageRef}></TestPage>,
+    <RecordCost ref={RecordCostRef}></RecordCost>,
   ];
 
-  const refs = [selectParticipantRef, TestPageRef];
+  const refs = [selectParticipantRef, RecordCostRef];
 
   return (
     <>

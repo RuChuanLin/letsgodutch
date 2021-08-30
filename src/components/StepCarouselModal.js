@@ -43,6 +43,7 @@ const StepCarouselModal = ({
         visible={isModalVisible}
         footer={[
           <Button
+            key="prevButton"
             onClick={() => {
               callButtonMethod();
               slider.current.prev();
@@ -52,6 +53,7 @@ const StepCarouselModal = ({
             {getChildElementPackage()?.prev?.buttonText || "Prev"}
           </Button>,
           <Button
+            key="nextButton"
             type="primary"
             onClick={() => {
               callButtonMethod();

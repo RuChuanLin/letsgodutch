@@ -30,45 +30,70 @@ const genUserData = ({ users, focusRecord }) => {
   return userObject;
 };
 
+const filterObject = (userObject, filterKey) =>
+  Object.entries(userObject)
+    .filter(([_, v]) => v?.[filterKey])
+    .map(([name]) => name);
+
 const SelectParticipants = forwardRef((props, ref) => {
   const { users, focusRecord } = useSelector((state) => state);
 
-  const userObject = genUserData({ users, focusRecord });
-  const userData = Object.values(userObject);
-
-  const [selectedKeys, setSelectedKeys] = useState(
-    userData.filter(({ selected }) => selected).map(({ name }) => name)
-  );
-
-  const [targetKeys, setTargetKeys] = useState(
-    userData.filter(({ targeted }) => targeted).map(({ name }) => name)
+  const [userObject, setUserObject] = useState(
+    genUserData({ users, focusRecord })
   );
 
   const onChange = (nextTargetKeys) => {
-    setTargetKeys(nextTargetKeys);
+    const allKeySet = new Set(Object.keys(userObject));
+    const newUserObject = { ...userObject };
+
+    nextTargetKeys.forEach((targetKey) => {
+      newUserObject[targetKey].targeted = true;
+      allKeySet.delete(targetKey);
+    });
+    allKeySet.forEach((unselectedKey) => {
+      newUserObject[unselectedKey].selected = false;
+    });
+    setUserObject(newUserObject);
   };
 
   const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
-    setSelectedKeys([...sourceSelectedKeys, ...targetSelectedKeys]);
+    const selectedKeys = [...sourceSelectedKeys, ...targetSelectedKeys];
+    const allKeySet = new Set(Object.keys(userObject));
+    const newUserObject = { ...userObject };
+
+    selectedKeys.forEach((selectKey) => {
+      newUserObject[selectKey].selected = true;
+      allKeySet.delete(selectKey);
+    });
+    allKeySet.forEach((unselectedKey) => {
+      newUserObject[unselectedKey].selected = false;
+    });
+
+    setUserObject(newUserObject);
   };
 
   const dispatch = useDispatch();
 
-  useImperativeHandle(ref, () => ({
-    fn: () => {
-      const participants = targetKeys.map((targetKey) => userObject[targetKey]);
-      dispatch(updateFocusRecord({ participants }));
-    },
-  }));
+  useImperativeHandle(ref, () => { 
+    debugger
+    const participants = Object.entries(userObject).reduce(
+      ([name, obj], cur) => { 
+        return (obj.targeted ? { ...cur, [name]: obj } : cur)},
+      {}
+    );
+    return {
+      fn: () => dispatch(updateFocusRecord({ participants })),
+    };
+  });
 
   return (
     <>
       {/* <h2>請選擇參與訂餐人</h2> */}
       <Transfer
-        dataSource={userData}
+        dataSource={Object.values(userObject)}
         titles={["未訂餐", "有要訂餐"]}
-        targetKeys={targetKeys}
-        selectedKeys={selectedKeys}
+        targetKeys={filterObject(userObject, "targeted")}
+        selectedKeys={filterObject(userObject, "selected")}
         onChange={onChange}
         onSelectChange={onSelectChange}
         render={(item) => item.name}
