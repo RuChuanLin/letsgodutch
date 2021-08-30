@@ -16,15 +16,14 @@ const generateColumns = (events) => {
     { title: "運費", dataIndex: "deliveryFee", key: "deliveryFee" },
     { title: "優惠", dataIndex: "discountAmount", key: "discountAmount" },
     ...participants.map((participant) => {
-      const lowerCaseName = participant.toLocaleLowerCase();
       return {
         title: participant,
         render: (cost) => cost || 0,
         children: [
           {
             title: totalCostAmount[participant],
-            dataIndex: lowerCaseName,
-            key: lowerCaseName,
+            dataIndex: participant,
+            key: participant,
           },
         ],
       };
@@ -46,7 +45,7 @@ const generateDataSource = (events) => {
       ...Object.entries(participants).reduce(
         (acc, [name, cost]) => ({
           ...acc,
-          ...{ [name.toLocaleLowerCase()]: cost },
+          ...{ [name]: cost },
         }),
         {}
       ),
@@ -78,7 +77,6 @@ const generateTotalCostAmount = (events) =>
   }, {});
 
 const DataTable = () => {
-  ;
   const records = useSelector((state) => state.records);
   const columns = generateColumns(records);
   const dataSource = generateDataSource(records);
@@ -87,7 +85,7 @@ const DataTable = () => {
       <Table
         dataSource={dataSource}
         columns={columns}
-        scroll={{ y: 500 }}
+        pagination={{ pageSize: 5 }}
       ></Table>
     </>
   );
