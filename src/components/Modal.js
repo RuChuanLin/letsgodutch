@@ -19,7 +19,7 @@ const CustomModal = ({buttonTitle = 'Open Modal', title, okFunction, children}) 
 
   return (
     <>
-      <Button type="primary" onClick={showModal}>
+      <Button type="primary" onClick={showModal} style={{marginRight:12}}>
         {buttonTitle}
       </Button>
       <Modal
