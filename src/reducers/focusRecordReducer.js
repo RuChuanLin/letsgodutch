@@ -1,5 +1,8 @@
 import moment from "moment";
-import { FOCUS_RECORD__UPDATE_RECORD } from "../constants/focusRecordConst";
+import {
+  FOCUS_RECORD__UPDATE_RECORD,
+  FOCUS_RECORD__RESET_RECORD,
+} from "../constants/focusRecordConst";
 
 const initialState = {
   date: moment().valueOf(),
@@ -13,10 +16,12 @@ const initialState = {
   payer: "",
 };
 
-const reducer = (state = initialState, action) => {
+const reducer = (state = { ...initialState }, action) => {
   switch (action.type) {
     case FOCUS_RECORD__UPDATE_RECORD:
       return { ...state, ...action.payload };
+    case FOCUS_RECORD__RESET_RECORD:
+      return { ...initialState };
     default:
       return state;
   }

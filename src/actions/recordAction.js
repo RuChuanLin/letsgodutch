@@ -14,7 +14,7 @@ export const fetchAllRecords =
         .get()
         .then((snapshots) => {
           const allRecords = snapshots.docs.map((snapshot) => snapshot.data());
-          console.log(allRecords)
+          console.log(allRecords);
           dispatch({ type: RECORDS__LOAD_ALL_RECORD, payload: allRecords });
         });
     } else {
@@ -22,6 +22,20 @@ export const fetchAllRecords =
     }
   };
 
-export const addNewRecord = (newRecord) => {
-  return { type: RECORDS__ADD_RECORD, payload: newRecord };
-};
+export const addNewRecord =
+  ({ toCloud = false, newRecord }) =>
+  (dispatch, getState) => {
+    debugger
+    if (!newRecord) {
+      return;
+    }
+    if (toCloud) {
+      getRecordDB()
+        .add(newRecord)
+        .then(() =>
+          dispatch({ type: RECORDS__ADD_RECORD, payload: newRecord })
+        );
+    } else {
+      dispatch({ type: RECORDS__ADD_RECORD, payload: newRecord });
+    }
+  };

@@ -6,7 +6,7 @@ const reducer = (state = initialState, action) => {
     case USER__LOAD_ALL_USERS:
       return {...action.payload};
     case USER__ADD_USER:
-      return {...state, ...action.payload};
+      return {...state, [action.payload.name]: {}};
     default:
       return state;
   }

@@ -1,4 +1,7 @@
-import { FOCUS_RECORD__UPDATE_RECORD } from "../constants/focusRecordConst";
+import {
+  FOCUS_RECORD__UPDATE_RECORD,
+  FOCUS_RECORD__RESET_RECORD,
+} from "../constants/focusRecordConst";
 
 import { getFocusRecordDB } from "../firebase";
 
@@ -17,3 +20,5 @@ export const fetchFocusRecord =
 export const updateFocusRecord = (payload) => {
   return { type: FOCUS_RECORD__UPDATE_RECORD, payload };
 };
+
+export const resetFocusRecord = () => ({ type: FOCUS_RECORD__RESET_RECORD });

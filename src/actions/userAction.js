@@ -23,9 +23,7 @@ export const addUser =
     console.log(getState());
     if (userName) {
       const nameObject = {
-        [userName]: {
-          newRecordStatus: { selected: false, targeted: false },
-        },
+        name: userName,
       };
       getUserDB()
         .add(nameObject)

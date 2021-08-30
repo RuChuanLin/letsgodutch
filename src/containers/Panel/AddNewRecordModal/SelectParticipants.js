@@ -51,7 +51,7 @@ const SelectParticipants = forwardRef((props, ref) => {
       allKeySet.delete(targetKey);
     });
     allKeySet.forEach((unselectedKey) => {
-      newUserObject[unselectedKey].selected = false;
+      newUserObject[unselectedKey].targeted = false;
     });
     setUserObject(newUserObject);
   };
@@ -74,11 +74,11 @@ const SelectParticipants = forwardRef((props, ref) => {
 
   const dispatch = useDispatch();
 
-  useImperativeHandle(ref, () => { 
-    debugger
+  useImperativeHandle(ref, () => {
     const participants = Object.entries(userObject).reduce(
-      ([name, obj], cur) => { 
-        return (obj.targeted ? { ...cur, [name]: obj } : cur)},
+      (acc, [name, obj]) => {
+        return obj.targeted ? { ...acc, [name]: obj } : acc;
+      },
       {}
     );
     return {

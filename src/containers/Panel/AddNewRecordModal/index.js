@@ -4,6 +4,8 @@ import StepCarouselModal from "../../../components/StepCarouselModal";
 
 import SelectParticipants from "./SelectParticipants";
 import RecordCost from "./RecordCost";
+import SelectPayer from "./SelectPayer";
+import RecordOtherStuff from "./RecordOtherStuff";
 
 const AddNewRecordModal = () => {
   const receiveChildValue = (value) => {
@@ -11,14 +13,23 @@ const AddNewRecordModal = () => {
   };
 
   const selectParticipantRef = useRef();
-  const RecordCostRef = useRef();
+  const recordCostRef = useRef();
+  const selectPayerRef = useRef();
+  const recordOtherStuff = useRef();
 
   const components = [
     <SelectParticipants ref={selectParticipantRef}></SelectParticipants>,
-    <RecordCost ref={RecordCostRef}></RecordCost>,
+    <RecordCost ref={recordCostRef}></RecordCost>,
+    <SelectPayer ref={selectPayerRef}></SelectPayer>,
+    <RecordOtherStuff ref={recordOtherStuff}></RecordOtherStuff>,
   ];
 
-  const refs = [selectParticipantRef, RecordCostRef];
+  const refs = [
+    selectParticipantRef,
+    recordCostRef,
+    selectPayerRef,
+    recordOtherStuff,
+  ];
 
   return (
     <>
