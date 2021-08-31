@@ -12,11 +12,6 @@ const StepCarouselModal = ({
 
   const showModal = () => setIsModalVisible(true);
 
-  const handleOk = () => {
-    okFunction();
-    setIsModalVisible(false);
-  };
-
   const handleCancel = () => {
     setIsModalVisible(false);
   };
