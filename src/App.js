@@ -13,7 +13,7 @@ const App = () => {
     dispatch(fetchFocusRecord());
     dispatch(fetchAllRecords());
     dispatch(fetchAllUsers());
-  });
+  }, [dispatch]);
 
   return (
     <>
