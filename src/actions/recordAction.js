@@ -25,7 +25,6 @@ export const fetchAllRecords =
 export const addNewRecord =
   ({ toCloud = false, newRecord }) =>
   (dispatch, getState) => {
-    debugger
     if (!newRecord) {
       return;
     }

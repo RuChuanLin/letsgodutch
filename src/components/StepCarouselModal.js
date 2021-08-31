@@ -66,13 +66,11 @@ const StepCarouselModal = ({
             {getChildElementPackage()?.next?.buttonText || "Next"}
           </Button>,
         ]}
-        onOk={() => {
-          slider.current.next();
-        }}
         onCancel={handleCancel}
         centered
       >
         <Carousel
+          lazyLoad="ondemand"
           style={contentStyle}
           beforeChange={(_, i) => setSlideIndex(i)}
           dots={false}

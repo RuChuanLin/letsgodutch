@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
-import { Form, Input } from "antd";
+import { Form, InputNumber } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 
 import { resetFocusRecord } from "../../../actions/focusRecordAction";
@@ -22,27 +22,24 @@ const SelectPayer = forwardRef((props, ref) => {
   });
   return (
     <>
+      <h2>其他選項</h2>
       <Form>
         <Form.Item label="運費">
-          <Input
-            type="number"
+          <InputNumber
             value={optional?.delivery?.fee || 0}
-            onChange={(e) =>
-              setOptional({ ...optional, delivery: { fee: +e.target.value } })
-            }
-          ></Input>
+            onChange={(fee) => setOptional({ ...optional, delivery: { fee } })}
+          ></InputNumber>
         </Form.Item>
         <Form.Item label="折扣">
-          <Input
-            type="number"
+          <InputNumber
             value={optional?.discount?.amount || 0}
-            onChange={(e) =>
+            onChange={(amount) =>
               setOptional({
                 ...optional,
-                discount: { amount: +e.target.value },
+                discount: { amount },
               })
             }
-          ></Input>
+          ></InputNumber>
         </Form.Item>
       </Form>
     </>

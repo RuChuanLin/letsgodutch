@@ -16,13 +16,17 @@ const SelectPayer = forwardRef((props, ref) => {
     return {
       fn: () =>
         dispatch(
-          updateFocusRecord({ participants: { ...participants, [payer]: payerCost }, payer })
+          updateFocusRecord({
+            participants: { ...participants, [payer]: payerCost },
+            payer,
+          })
         ),
     };
   });
 
   return (
     <>
+      <h2>請選擇付款人</h2>
       <Radio.Group
         buttonStyle="solid"
         value={payer}

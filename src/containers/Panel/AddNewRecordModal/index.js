@@ -8,10 +8,6 @@ import SelectPayer from "./SelectPayer";
 import RecordOtherStuff from "./RecordOtherStuff";
 
 const AddNewRecordModal = () => {
-  const receiveChildValue = (value) => {
-    console.log(value);
-  };
-
   const selectParticipantRef = useRef();
   const recordCostRef = useRef();
   const selectPayerRef = useRef();

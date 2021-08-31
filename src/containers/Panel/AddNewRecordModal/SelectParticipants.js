@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { updateFocusRecord } from "../../../actions/focusRecordAction";
 
 const genUserData = ({ users, focusRecord }) => {
+
   const userObject = {};
   Object.keys(users).forEach((key) => {
     userObject[key] = {
@@ -12,7 +13,7 @@ const genUserData = ({ users, focusRecord }) => {
       name: key,
       cost: 0,
       selected: false,
-      targeted: false,
+      targeted: true,
     };
   });
 
@@ -88,7 +89,7 @@ const SelectParticipants = forwardRef((props, ref) => {
 
   return (
     <>
-      {/* <h2>請選擇參與訂餐人</h2> */}
+      <h2>請選擇參與訂餐人</h2>
       <Transfer
         dataSource={Object.values(userObject)}
         titles={["未訂餐", "有要訂餐"]}

@@ -1,5 +1,5 @@
 import React, { forwardRef, useImperativeHandle, useState } from "react";
-import { Form, Input } from "antd";
+import { Form, InputNumber } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 
 import { updateFocusRecord } from "../../../actions/focusRecordAction";
@@ -25,19 +25,18 @@ const RecordCost = forwardRef((props, ref) => {
       fn: () => dispatch(updateFocusRecord({ participants: costs })),
     };
   });
-
   return (
     <>
+      <h2>輸入金額</h2>
       <Form>
         {Object.entries(participants).map((participant) => {
           const [name] = participant;
           return (
             <Form.Item key={name} label={name}>
-              <Input
-                type="number"
+              <InputNumber
                 value={costs[name] || 0}
-                onChange={(e) => setCosts({ ...costs, [name]: +e.target.value })}
-              ></Input>
+                onChange={(cost) => setCosts({ ...costs, [name]: cost })}
+              ></InputNumber>
             </Form.Item>
           );
         })}
