@@ -17,7 +17,6 @@ const App = () => {
 
   return (
     <>
-      <TestModal></TestModal>
       <Panel></Panel>
       <DataTable></DataTable>
     </>
