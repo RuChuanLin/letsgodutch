@@ -7,6 +7,8 @@ import { fetchAllUsers } from "./actions/userAction";
 import DataTable from "./containers/DataTable";
 import Panel from "./containers/Panel";
 
+import TestWizard from './containers/TestWizard'
+
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
@@ -18,6 +20,7 @@ const App = () => {
   return (
     <>
       <Panel></Panel>
+      <TestWizard></TestWizard>
       <DataTable></DataTable>
     </>
   );
