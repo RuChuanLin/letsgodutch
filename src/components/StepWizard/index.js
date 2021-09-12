@@ -10,14 +10,21 @@ const StepWizard = ({ focusRecord, setFocusRecord, stepPages }) => {
   const getPageInfo = () => stepPages[currentStepIndex];
 
   const slider = useRef();
-  //   const callButtonMethod = () => {
-  //     const { currentSlide } = slider.current.innerSlider.state;
-  //     getChildElementPackage(currentSlide)?.fn?.();
-  //   };
+
+  const validate = () => {
+    // const { errorMsgs } = focusRecord;
+    // if (!errorMsgs) {
+    //   return true;
+    // }
+    // return Object.entries(errorMsgs)
+    //   .filter(([_, existError]) => existError)
+    //   .map(([errorMsg]) => errorMsg);
+    return true; // TODO 之後研究怎麼寫驗證
+  };
 
   return (
     <div>
-      <Typography.Title>{getPageInfo()?.title}</Typography.Title>
+      <Typography.Title level={3}>{getPageInfo()?.title}</Typography.Title>
       <Carousel
         lazyLoad="ondemand"
         beforeChange={(_, i) => setCurrentStepIndex(i)}
@@ -27,11 +34,17 @@ const StepWizard = ({ focusRecord, setFocusRecord, stepPages }) => {
       >
         {stepPages.map((stepPage, i) => {
           const step = `step${i}`;
-          return <stepPage.Page key={step}></stepPage.Page>;
+          return (
+            <stepPage.Page
+              key={step}
+              focusRecord={focusRecord}
+              setFocusRecord={setFocusRecord}
+            ></stepPage.Page>
+          );
         })}
       </Carousel>
       <WizardPanel
-        validation={getPageInfo()?.validate ? getPageInfo()?.validate() : true}
+        errorMsgs={validate()}
         currentStepIndex={currentStepIndex}
         totalSteps={stepPages.length}
         getStepControl={() => slider.current}

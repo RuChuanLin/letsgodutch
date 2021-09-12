@@ -1,10 +1,21 @@
 import React, { useState } from "react";
-import First from "./First";
 
 import StepWizard from "../../components/StepWizard";
 
+import SelectParticipants from "./SelectParticipants";
+import RecordCost from "./RecordCost";
+import SelectPayer from "./SelectPayer";
+import RecordOtherStuff from "./RecordOtherStuff";
+
 const Test = () => {
-  const [focusRecord, setFocusRecord] = useState({});
+  const [focusRecord, setFocusRecord] = useState({
+    participants: {
+      River: { key: "River", name: "River", targeted: true },
+      Jill: { key: "Jill", name: "Jill", targeted: true },
+      Tony: { key: "Tony", name: "Tony", targeted: true },
+      Gary: { key: "Gary", name: "Gary", targeted: true },
+    },
+  });
   return (
     <>
       <StepWizard
@@ -12,13 +23,21 @@ const Test = () => {
         setFocusRecord={setFocusRecord}
         stepPages={[
           {
-            title: "First Page",
-            Page: First,
-            validate: () => false,
+            title: "請選擇參與訂餐人",
+            Page: SelectParticipants,
+            validate: SelectParticipants.validate,
           },
           {
-            title: "Second Page",
-            Page: First,
+            title: "輸入金額",
+            Page: RecordCost,
+          },
+          {
+            title: "請選擇付款人",
+            Page: SelectPayer,
+          },
+          {
+            title: "其他選項",
+            Page: RecordOtherStuff,
           },
         ]}
       ></StepWizard>
