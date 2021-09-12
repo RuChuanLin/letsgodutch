@@ -1,7 +1,9 @@
+import TestWizard from "./containers/TestWizard";
+
 const App = () => {
   return (
     <>
-      <h1>hi</h1>
+      <TestWizard></TestWizard>
     </>
   );
 };
