@@ -6,7 +6,6 @@ const SelectPayer = (props) => {
 
   return (
     <>
-      <h2>其他選項</h2>
       <Form>
         <Form.Item label="運費">
           <InputNumber

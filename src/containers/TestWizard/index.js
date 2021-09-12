@@ -16,11 +16,24 @@ const Test = () => {
       Gary: { key: "Gary", name: "Gary", targeted: true },
     },
   });
+
+  const ExtraPanelInfo = () => {
+    const { delivery, discount } = focusRecord;
+    const totalCost =
+      Object.values(focusRecord.participants)
+        .filter((participant) => participant.targeted)
+        .reduce((acc, cur) => acc + (cur.cost || 0), 0) +
+      (delivery?.fee || 0) -
+      (discount?.amount || 0);
+    return <span>總額：{totalCost}</span>;
+  };
+
   return (
     <>
       <StepWizard
         focusRecord={focusRecord}
         setFocusRecord={setFocusRecord}
+        ExtraPanelInfo={ExtraPanelInfo}
         stepPages={[
           {
             title: "請選擇參與訂餐人",
