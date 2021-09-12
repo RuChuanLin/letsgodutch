@@ -4,15 +4,24 @@ import First from "./First";
 import StepWizard from "../../components/StepWizard";
 
 const Test = () => {
-  const [focusRecord, setFocusRecord] = useState({
-    currentStep: 2,
-  });
+  const [focusRecord, setFocusRecord] = useState({});
   return (
     <>
-      <StepWizard>
-        <First></First>
-        <First></First>
-      </StepWizard>
+      <StepWizard
+        focusRecord={focusRecord}
+        setFocusRecord={setFocusRecord}
+        stepPages={[
+          {
+            title: "First Page",
+            Page: First,
+            validate: () => false,
+          },
+          {
+            title: "Second Page",
+            Page: First,
+          },
+        ]}
+      ></StepWizard>
     </>
   );
 };

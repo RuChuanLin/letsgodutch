@@ -1,33 +1,39 @@
-const WizardPanel = ({ currentStepIndex, totalSteps, getStepControl }) => {
+import styled from "styled-components";
+import { Button } from "antd";
+
+const Wrapper = styled.div`
+  display: flex;
+  padding: 12px;
+  justify-content: flex-end;
+  button {
+    margin-left: 12px;
+  }
+`;
+
+const WizardPanel = ({
+  currentStepIndex,
+  totalSteps,
+  getStepControl,
+  validation,
+  prevText = "Go Back",
+  nextText = "Continue",
+  FinishText = "Finish",
+}) => {
   //   const firstStep = () => getStepControl().goto(0);
   //   const lastStep = () => getStepControl().goto(totalSteps - 1);
-
   return (
-    <div>
+    <Wrapper>
       {currentStepIndex > 0 && (
-        <button
-          className="btn btn-default btn-block"
-          onClick={() => getStepControl().prev()}
-        >
-          Go Back
-        </button>
+        <Button onClick={() => getStepControl().prev()}>{prevText}</Button>
       )}
-      {currentStepIndex < totalSteps - 1 ? (
-        <button
-          className="btn btn-primary btn-block"
-          onClick={() => getStepControl().next()}
-        >
-          Continue
-        </button>
-      ) : (
-        <button
-          className="btn btn-success btn-block"
-          onClick={() => getStepControl().next()}
-        >
-          Finish
-        </button>
-      )}
-    </div>
+      {
+        <Button
+        disabled={!validation}
+        type="primary" onClick={() => getStepControl().next()}>
+          {currentStepIndex < totalSteps - 1 ? nextText : FinishText}
+        </Button>
+      }
+    </Wrapper>
   );
 };
 

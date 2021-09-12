@@ -1,15 +1,13 @@
 import React, { useState, useRef } from "react";
 
-import _StepWizard from "react-step-wizard";
-
-import { Carousel } from "antd";
+import { Typography, Carousel } from "antd";
 
 import WizardPanel from "./WizardPanel";
 
-const StepWizard = ({ title, okFunction, childElementPackages, children }) => {
-  const contentStyle = {};
+const StepWizard = ({ focusRecord, setFocusRecord, stepPages }) => {
+  const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
-  const [stepIndex, setStepIndex] = useState(0);
+  const getPageInfo = () => stepPages[currentStepIndex];
 
   const slider = useRef();
   //   const callButtonMethod = () => {
@@ -19,54 +17,26 @@ const StepWizard = ({ title, okFunction, childElementPackages, children }) => {
 
   return (
     <div>
+      <Typography.Title>{getPageInfo()?.title}</Typography.Title>
       <Carousel
         lazyLoad="ondemand"
-        style={contentStyle}
-        beforeChange={(_, i) => setStepIndex(i)}
+        beforeChange={(_, i) => setCurrentStepIndex(i)}
         dots={false}
         infinite={false}
         ref={(ref) => (slider.current = ref)}
       >
-        {children}
+        {stepPages.map((stepPage, i) => {
+          const step = `step${i}`;
+          return <stepPage.Page key={step}></stepPage.Page>;
+        })}
       </Carousel>
       <WizardPanel
-        currentStepIndex={stepIndex}
-        totalSteps={children.length}
+        validation={getPageInfo()?.validate ? getPageInfo()?.validate() : true}
+        currentStepIndex={currentStepIndex}
+        totalSteps={stepPages.length}
         getStepControl={() => slider.current}
       ></WizardPanel>
     </div>
   );
 };
-
 export default StepWizard;
-
-// const StepWizard = (props) => {
-//   console.log(props);
-//   const { stepPages, initialState, setInitialState } = props;
-//   const { currentStep } = initialState;
-//   console.log(currentStep);
-//   return (
-//     <>
-//       <_StepWizard currentStep={currentStep}>
-//         {stepPages.map((Step, i) => {
-//           const step = i + 1;
-//           return (
-//             <div>
-//               <Step
-//                 hashKey={"Step" + step}
-//                 key={"Step" + step}
-//                 step={step}
-//                 initialState={initialState}
-//                 setInitialState={setInitialState}
-//                 {...props}
-//               ></Step>
-//               <WizardPanel {...props}></WizardPanel>
-//             </div>
-//           );
-//         })}
-//       </_StepWizard>
-//     </>
-//   );
-// };
-
-// export default StepWizard;
