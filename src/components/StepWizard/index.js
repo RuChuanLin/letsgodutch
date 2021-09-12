@@ -4,7 +4,12 @@ import { Typography, Carousel } from "antd";
 
 import WizardPanel from "./WizardPanel";
 
-const StepWizard = ({ focusRecord, setFocusRecord, stepPages }) => {
+const StepWizard = ({
+  focusRecord,
+  setFocusRecord,
+  stepPages,
+  ExtraPanelInfo,
+}) => {
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
 
   const getPageInfo = () => stepPages[currentStepIndex];
@@ -44,6 +49,7 @@ const StepWizard = ({ focusRecord, setFocusRecord, stepPages }) => {
         })}
       </Carousel>
       <WizardPanel
+        ExtraPanelInfo={ExtraPanelInfo}
         errorMsgs={validate()}
         currentStepIndex={currentStepIndex}
         totalSteps={stepPages.length}

@@ -5,6 +5,7 @@ const Wrapper = styled.div`
   display: flex;
   padding: 12px;
   justify-content: flex-end;
+  align-items: center;
   button {
     margin-left: 12px;
   }
@@ -18,19 +19,22 @@ const WizardPanel = ({
   prevText = "Go Back",
   nextText = "Continue",
   FinishText = "Finish",
+  ExtraPanelInfo,
 }) => {
-    console.log(errorMsgs)
   //   const firstStep = () => getStepControl().goto(0);
   //   const lastStep = () => getStepControl().goto(totalSteps - 1);
   return (
     <Wrapper>
+      {ExtraPanelInfo ?<ExtraPanelInfo></ExtraPanelInfo> : <>123</>}
       {currentStepIndex > 0 && (
         <Button onClick={() => getStepControl().prev()}>{prevText}</Button>
       )}
       {
         <Button
-        disabled={errorMsgs.length > 0}
-        type="primary" onClick={() => getStepControl().next()}>
+          disabled={errorMsgs.length > 0}
+          type="primary"
+          onClick={() => getStepControl().next()}
+        >
           {currentStepIndex < totalSteps - 1 ? nextText : FinishText}
         </Button>
       }
