@@ -13,7 +13,7 @@ export const fetchFocusRecord =
       .get()
       .then((snapshots) => {
         const focusRecord = snapshots.docs?.[0]?.data?.();
-        dispatch({ type: FOCUS_RECORD__UPDATE_RECORD, payload: focusRecord });
+        dispatch({ type: FOCUS_RECORD__UPDATE_RECORD, payload: {$set : focusRecord} });
       });
   };
 

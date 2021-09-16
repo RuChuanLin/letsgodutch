@@ -1,7 +1,8 @@
 import React from "react";
 
 import AddUserModal from "./AddUserModal";
-import AddNewRecordModal from "./AddNewRecordModal";
+// import AddNewRecordModal from "./AddNewRecordModal";
+import TestWizard from '../TestWizard'
 
 
 const Panel = () => {
@@ -15,7 +16,8 @@ const Panel = () => {
       }}
     >
       <AddUserModal></AddUserModal>
-      <AddNewRecordModal></AddNewRecordModal>
+      <TestWizard></TestWizard>
+      {/* <AddNewRecordModal></AddNewRecordModal> */}
     </div>
   );
 };

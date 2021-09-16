@@ -27,6 +27,8 @@ const CustomModal = ({buttonTitle = 'Open Modal', title, okFunction, children}) 
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
+        footer={null}
+        centered
       >
        {children}
       </Modal>
