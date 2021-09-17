@@ -1,7 +1,24 @@
-import React, { useState, useRef } from "react";
-import { Modal, Button, Typography, Carousel } from "antd";
-
+import React, { useState } from "react";
+import { Modal, Button, Typography } from "antd";
+import styled from "styled-components";
+import Wizard from "react-step-wizard";
 import WizardPanel from "./WizardPanel";
+
+import "./transitions.css";
+
+const transitions = {
+  enterRight: `animated enterRight`,
+  enterLeft: `animated enterLeft`,
+  exitRight: `animated exitRight`,
+  exitLeft: `animated exitLeft`,
+  intro: `animated intro`,
+};
+
+const Wrapper = styled.div`
+  display: flex;
+  flex-direction: column;
+  height: 260px; 
+`;
 
 const StepWizard = ({
   focusRecord,
@@ -12,28 +29,35 @@ const StepWizard = ({
   buttonTitle = "Open Modal",
   title,
   okFunction,
-  children,
 }) => {
-  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [state, setState] = useState({
+    activeStep: 0,
+    isModalVisible: false,
+  });
 
   const showModal = () => {
-    setIsModalVisible(true);
+    setState({ ...state, isModalVisible: true });
   };
 
   const handleOk = () => {
     okFunction();
-    setIsModalVisible(false);
+    setState({ ...state, isModalVisible: false });
   };
 
   const handleCancel = () => {
-    setIsModalVisible(false);
+    setState({ ...state, isModalVisible: false });
   };
+  const setInstance = (SW) =>
+    setState({
+      ...state,
+      SW,
+    });
 
-  const [currentStepIndex, setCurrentStepIndex] = useState(0);
+  const { SW, activeStep } = state;
 
-  const getPageInfo = () => stepPages[currentStepIndex];
-
-  const slider = useRef();
+  const onStepChange = ({ activeStep }) => { 
+    setState({ ...state, activeStep });
+  };
 
   const validate = () => {
     // const { errorMsgs } = focusRecord;
@@ -52,40 +76,42 @@ const StepWizard = ({
         {buttonTitle}
       </Button>
       <Modal
+      style={{overflow:'auto'}}
         title={title}
-        visible={isModalVisible}
+        visible={state.isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
-        
         footer={[
-          <WizardPanel
-            ExtraPanelInfo={ExtraPanelInfo}
-            errorMsgs={validate()}
-            currentStepIndex={currentStepIndex}
-            totalSteps={stepPages.length}
-            getStepControl={() => slider.current}
-          ></WizardPanel>,
+          SW && (
+            <WizardPanel
+              SW={SW}
+              activeStep={activeStep}
+              ExtraPanelInfo={ExtraPanelInfo}
+              errorMsgs={true}
+              totalSteps={stepPages.length}
+            ></WizardPanel>
+          ),
         ]}
         centered
       >
-        <Typography.Title level={3}>{getPageInfo()?.title}</Typography.Title>
-        <Carousel
-          beforeChange={(_, i) => setCurrentStepIndex(i)}
-          dots={false}
-          infinite={false}
-          ref={(ref) => (slider.current = ref)}
+        <Wizard
+          onStepChange={onStepChange}
+          transitions={transitions}
+          instance={setInstance}
         >
           {stepPages.map((stepPage, i) => {
             const step = `step${i}`;
             return (
-              <stepPage.Page
-                key={step}
-                focusRecord={focusRecord}
-                setFocusRecord={setFocusRecord}
-              ></stepPage.Page>
+              <Wrapper key={step}>
+                <Typography.Title level={3}>{stepPage?.title}</Typography.Title>
+                <stepPage.Page
+                  focusRecord={focusRecord}
+                  setFocusRecord={setFocusRecord}
+                ></stepPage.Page>
+              </Wrapper>
             );
           })}
-        </Carousel>
+        </Wizard>
       </Modal>
     </>
   );

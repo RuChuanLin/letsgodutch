@@ -10,39 +10,38 @@ const Wrapper = styled.div`
 
 const LeftWrapper = styled.div``;
 const RightWrapper = styled.div`
-button {
-  margin-left: 16px!important;
-}
+  button {
+    margin-left: 16px !important;
+  }
 `;
 
 const WizardPanel = ({
-  currentStepIndex,
-  totalSteps,
-  getStepControl,
+  SW,
+  activeStep,
   errorMsgs,
   prevText = "Go Back",
   nextText = "Continue",
   FinishText = "Finish",
   ExtraPanelInfo,
 }) => {
-  //   const firstStep = () => getStepControl().goto(0);
-  //   const lastStep = () => getStepControl().goto(totalSteps - 1);
+  const { totalSteps } = SW;
+
   return (
     <Wrapper>
       <LeftWrapper>
         {ExtraPanelInfo ? <ExtraPanelInfo></ExtraPanelInfo> : <></>}
       </LeftWrapper>
       <RightWrapper>
-        {currentStepIndex > 0 && (
-          <Button onClick={() => getStepControl().prev()}>{prevText}</Button>
+        {activeStep > 0 && (
+          <Button onClick={SW.previousStep}>{prevText}</Button>
         )}
         {
           <Button
             disabled={errorMsgs.length > 0}
             type="primary"
-            onClick={() => getStepControl().next()}
+            onClick={SW.nextStep}
           >
-            {currentStepIndex < totalSteps - 1 ? nextText : FinishText}
+            {activeStep < totalSteps - 1 ? nextText : FinishText}
           </Button>
         }
       </RightWrapper>
