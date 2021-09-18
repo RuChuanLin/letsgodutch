@@ -17,7 +17,7 @@ const transitions = {
 const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
-  height: 260px; 
+  height: 260px;
 `;
 
 const StepWizard = ({
@@ -25,10 +25,9 @@ const StepWizard = ({
   setFocusRecord,
   stepPages,
   ExtraPanelInfo,
-
   buttonTitle = "Open Modal",
   title,
-  okFunction,
+  onFinished,
 }) => {
   const [state, setState] = useState({
     activeStep: 0,
@@ -37,11 +36,6 @@ const StepWizard = ({
 
   const showModal = () => {
     setState({ ...state, isModalVisible: true });
-  };
-
-  const handleOk = () => {
-    okFunction();
-    setState({ ...state, isModalVisible: false });
   };
 
   const handleCancel = () => {
@@ -55,7 +49,7 @@ const StepWizard = ({
 
   const { SW, activeStep } = state;
 
-  const onStepChange = ({ activeStep }) => { 
+  const onStepChange = ({ activeStep }) => {
     setState({ ...state, activeStep });
   };
 
@@ -76,10 +70,9 @@ const StepWizard = ({
         {buttonTitle}
       </Button>
       <Modal
-      style={{overflow:'auto'}}
+        style={{ overflow: "auto" }}
         title={title}
         visible={state.isModalVisible}
-        onOk={handleOk}
         onCancel={handleCancel}
         footer={[
           SW && (
@@ -89,6 +82,10 @@ const StepWizard = ({
               ExtraPanelInfo={ExtraPanelInfo}
               errorMsgs={true}
               totalSteps={stepPages.length}
+              onFinished={() => {
+                onFinished();
+                handleCancel();
+              }}
             ></WizardPanel>
           ),
         ]}

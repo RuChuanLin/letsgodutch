@@ -21,8 +21,9 @@ const WizardPanel = ({
   errorMsgs,
   prevText = "Go Back",
   nextText = "Continue",
-  FinishText = "Finish",
+  finishText = "Finish",
   ExtraPanelInfo,
+  onFinished,
 }) => {
   const { totalSteps } = SW;
 
@@ -35,15 +36,23 @@ const WizardPanel = ({
         {activeStep > 0 && (
           <Button onClick={SW.previousStep}>{prevText}</Button>
         )}
-        {
+        {activeStep < totalSteps ? (
           <Button
             disabled={errorMsgs.length > 0}
             type="primary"
             onClick={SW.nextStep}
           >
-            {activeStep < totalSteps - 1 ? nextText : FinishText}
+            {nextText}
           </Button>
-        }
+        ) : (
+          <Button
+            disabled={errorMsgs.length > 0}
+            type="primary"
+            onClick={onFinished}
+          >
+            {finishText}
+          </Button>
+        )}
       </RightWrapper>
     </Wrapper>
   );

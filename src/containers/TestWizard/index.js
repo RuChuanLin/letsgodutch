@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-
+import { useDispatch } from "react-redux";
+import { addNewRecord } from "../../actions/recordAction";
 import StepWizardModal from "../../components/StepWizardModal";
 
 import SelectParticipants from "./SelectParticipants";
@@ -8,6 +9,8 @@ import SelectPayer from "./SelectPayer";
 import RecordOtherStuff from "./RecordOtherStuff";
 
 const Test = () => {
+  const dispatch = useDispatch();
+
   const [focusRecord, setFocusRecord] = useState({
     participants: {
       River: { key: "River", name: "River", targeted: true },
@@ -28,12 +31,17 @@ const Test = () => {
     return <span>總額：{totalCost}</span>;
   };
 
+  const onFinished = () => {
+    dispatch(addNewRecord({ toCloud: true, newRecord: focusRecord }));
+  };
+
   return (
     <>
       <StepWizardModal
         focusRecord={focusRecord}
         setFocusRecord={setFocusRecord}
         ExtraPanelInfo={ExtraPanelInfo}
+        onFinished={onFinished}
         stepPages={[
           {
             title: "請選擇參與訂餐人",
