@@ -13,10 +13,10 @@ const Test = () => {
 
   const [focusRecord, setFocusRecord] = useState({
     participants: {
-      River: { key: "River", name: "River", targeted: true },
-      Jill: { key: "Jill", name: "Jill", targeted: true },
-      Tony: { key: "Tony", name: "Tony", targeted: true },
-      Gary: { key: "Gary", name: "Gary", targeted: true },
+      River: { key: "River", name: "River", targeted: true, cost: '' },
+      Jill: { key: "Jill", name: "Jill", targeted: true, cost: '' },
+      Tony: { key: "Tony", name: "Tony", targeted: true, cost: '' },
+      Gary: { key: "Gary", name: "Gary", targeted: true, cost: '' },
     },
   });
 

@@ -26,30 +26,17 @@ const WizardPanel = ({
   onFinished,
 }) => {
   const { totalSteps } = SW;
-
   return (
     <Wrapper>
-      <LeftWrapper>
-        {ExtraPanelInfo ? <ExtraPanelInfo></ExtraPanelInfo> : <></>}
-      </LeftWrapper>
+      <LeftWrapper>{ExtraPanelInfo ? <ExtraPanelInfo></ExtraPanelInfo> : <></>}</LeftWrapper>
       <RightWrapper>
-        {activeStep > 0 && (
-          <Button onClick={SW.previousStep}>{prevText}</Button>
-        )}
+        {activeStep > 1 && <Button onClick={SW.previousStep}>{prevText}</Button>}
         {activeStep < totalSteps ? (
-          <Button
-            disabled={errorMsgs.length > 0}
-            type="primary"
-            onClick={SW.nextStep}
-          >
+          <Button disabled={errorMsgs.length > 0} type="primary" onClick={SW.nextStep}>
             {nextText}
           </Button>
         ) : (
-          <Button
-            disabled={errorMsgs.length > 0}
-            type="primary"
-            onClick={onFinished}
-          >
+          <Button disabled={errorMsgs.length > 0} type="primary" onClick={onFinished}>
             {finishText}
           </Button>
         )}

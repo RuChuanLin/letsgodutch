@@ -1,3 +1,5 @@
+import moment from 'moment'
+
 import {
   RECORDS__ADD_RECORD,
   RECORDS__LOAD_ALL_RECORD,
@@ -28,13 +30,14 @@ export const addNewRecord =
     if (!newRecord) {
       return;
     }
+    const arrangedRecord = {...newRecord, date : new moment().valueOf()}
     if (toCloud) {
       getRecordDB()
-        .add(newRecord)
+        .add(arrangedRecord)
         .then(() =>
-          dispatch({ type: RECORDS__ADD_RECORD, payload: newRecord })
+          dispatch({ type: RECORDS__ADD_RECORD, payload: arrangedRecord })
         );
     } else {
-      dispatch({ type: RECORDS__ADD_RECORD, payload: newRecord });
+      dispatch({ type: RECORDS__ADD_RECORD, payload: arrangedRecord });
     }
   };

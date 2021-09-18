@@ -1,5 +1,6 @@
 import React, { useState } from "react";
-import { Modal, Button, Typography } from "antd";
+import { Modal, Typography } from "antd";
+import Button from "../Button";
 import styled from "styled-components";
 import Wizard from "react-step-wizard";
 import WizardPanel from "./WizardPanel";
@@ -30,7 +31,7 @@ const StepWizard = ({
   onFinished,
 }) => {
   const [state, setState] = useState({
-    activeStep: 0,
+    activeStep: 1,
     isModalVisible: false,
   });
 
@@ -77,6 +78,7 @@ const StepWizard = ({
         footer={[
           SW && (
             <WizardPanel
+              key="panel"
               SW={SW}
               activeStep={activeStep}
               ExtraPanelInfo={ExtraPanelInfo}
@@ -93,7 +95,7 @@ const StepWizard = ({
       >
         <Wizard
           onStepChange={onStepChange}
-          transitions={transitions}
+          transitions={state.isModalVisible && transitions}
           instance={setInstance}
         >
           {stepPages.map((stepPage, i) => {

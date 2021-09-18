@@ -1,7 +1,6 @@
 import React from "react";
 import { Transfer } from "antd";
-import {useSelector} from 'react-redux'
-
+import { useSelector } from "react-redux";
 
 const filterObject = ({ participants }, filterKey) =>
   Object.entries(participants)
@@ -9,7 +8,7 @@ const filterObject = ({ participants }, filterKey) =>
     .map(([name]) => name);
 
 const SelectParticipants = (props) => {
-  const a = useSelector(state=>state.focusRecord)
+  const a = useSelector((state) => state.focusRecord);
   
   const { focusRecord, setFocusRecord } = props;
   const { participants } = focusRecord;

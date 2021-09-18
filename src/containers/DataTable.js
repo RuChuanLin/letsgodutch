@@ -3,6 +3,9 @@ import { useSelector } from "react-redux";
 
 import moment from "moment";
 
+const getParticipantFilteredEntries = (participants) =>
+  Object.entries(participants).filter(([_, { targeted }]) => targeted);
+
 const generateColumns = (events) => {
   const totalCostAmount = generateTotalCostAmount(events);
   const participants = Object.keys(totalCostAmount);
@@ -21,7 +24,7 @@ const generateColumns = (events) => {
         render: (cost) => cost || 0,
         children: [
           {
-            title: totalCostAmount[participant],
+            title: Math.round((totalCostAmount[participant] + Number.EPSILON) * 100) / 100,
             dataIndex: participant,
             key: participant,
           },
@@ -43,15 +46,15 @@ const generateDataSource = (events) => {
       payer,
       discountAmount,
       ...Object.entries(participants).reduce(
-        (acc, [name, cost]) => ({
+        (acc, [name, obj]) => ({
           ...acc,
-          ...{ [name]: cost },
+          ...{ [name]: obj?.cost || 0 },
         }),
         {}
       ),
       deliveryFee,
       totalAmount: Object.entries(participants).reduce(
-        (acc, [_, cost]) => acc + cost,
+        (acc, [_, { cost = 0 }]) => acc + cost,
         deliveryFee - discountAmount
       ),
     };
@@ -66,9 +69,10 @@ const generateTotalCostAmount = (events) =>
     const deliveryFee = delivery?.fee || 0;
     const discountAmount = discount?.amount || 0;
     const initValue = deliveryFee - discountAmount;
-    const averageDeliveryFee = initValue / Object.keys(participants).length;
+    const participantEntries = getParticipantFilteredEntries(participants);
+    const averageDeliveryFee = initValue / participantEntries.length;
     let totalAmount = initValue;
-    Object.entries(participants).forEach(([name, cost]) => {
+    participantEntries.forEach(([name, { cost = 0 }]) => {
       acc[name] = (acc[name] || 0) - cost - averageDeliveryFee;
       totalAmount += cost;
     });
@@ -82,11 +86,7 @@ const DataTable = () => {
   const dataSource = generateDataSource(records);
   return (
     <>
-      <Table
-        dataSource={dataSource}
-        columns={columns}
-        pagination={{ pageSize: 5 }}
-      ></Table>
+      <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 5 }}></Table>
     </>
   );
 };
