@@ -14,14 +14,20 @@ const initialState = {
   discount: {
     amount: 0,
   },
-  participants: {},
+  participants: {
+    River: { key: "River", name: "River", targeted: true, cost: "" },
+    Jill: { key: "Jill", name: "Jill", targeted: true, cost: "" },
+    Tony: { key: "Tony", name: "Tony", targeted: true, cost: "" },
+    Gary: { key: "Gary", name: "Gary", targeted: true, cost: "" },
+  },
   payer: "",
 };
 
 const reducer = (state = { ...initialState }, action) => {
   switch (action.type) {
-    case FOCUS_RECORD__UPDATE_RECORD:
+    case FOCUS_RECORD__UPDATE_RECORD:{
       return update(state, action.payload);
+    }
     case FOCUS_RECORD__RESET_RECORD:
       return { ...initialState };
     default:

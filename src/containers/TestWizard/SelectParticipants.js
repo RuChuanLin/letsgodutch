@@ -1,48 +1,43 @@
 import React from "react";
 import { Transfer } from "antd";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+
+import { updateFocusRecord } from "../../actions/focusRecordAction";
 
 const filterObject = ({ participants }, filterKey) =>
   Object.entries(participants)
     .filter(([_, v]) => v?.[filterKey])
     .map(([name]) => name);
 
-const SelectParticipants = (props) => {
-  const a = useSelector((state) => state.focusRecord);
-  
-  const { focusRecord, setFocusRecord } = props;
+const SelectParticipants = () => {
+  const focusRecord = useSelector((state) => state.focusRecord);
+  const dispatch = useDispatch();
+  const setFocusRecord = (patch) => dispatch(updateFocusRecord(patch));
+
   const { participants } = focusRecord;
 
   const participantChangeHandler = (keys, action) => {
-    const newParticipants = { ...participants };
-    for (const participant in newParticipants) {
-      newParticipants[participant][action] = false;
-    }
-    for (const key of keys) {
-      newParticipants[key][action] = true;
-    }
-    return newParticipants;
+    const keySet = new Set(keys);
+    const patchObject = {};
+    Object.entries(participants).forEach(([name, obj]) => {
+      const included = keySet.has(name);
+      if (obj[action] !== included) {
+        if (!patchObject[name]) {
+          patchObject[name] = {};
+        }
+        patchObject[name][action] = { $set: included };
+      }
+    });
+    return { participants: patchObject };
   };
 
   const onChange = (nextTargetKeys) => {
-    const targetedCount = nextTargetKeys.length;
-    const newFocusRecord = {
-      ...focusRecord,
-      errorMsgs: {
-        ...focusRecord.errorMsgs,
-        ["至少需選擇兩位參與者"]: targetedCount < 2,
-      },
-      participants: participantChangeHandler(nextTargetKeys, "targeted"),
-    };
-    setFocusRecord(newFocusRecord);
+    setFocusRecord(participantChangeHandler(nextTargetKeys, "targeted"));
   };
 
   const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
     const selectedKeys = [...sourceSelectedKeys, ...targetSelectedKeys];
-    setFocusRecord({
-      ...focusRecord,
-      participants: participantChangeHandler(selectedKeys, "selected"),
-    });
+    setFocusRecord(participantChangeHandler(selectedKeys, "selected"));
   };
 
   return (
