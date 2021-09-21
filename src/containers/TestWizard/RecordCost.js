@@ -1,31 +1,23 @@
-import updateState from "immutability-helper";
-import { Form, InputNumber } from "antd";
 import Input from "../../components/Input";
+import { filterParticipants } from "../../utils/common";
 
-const RecordCost = (props) => {
-  const { formik, focusRecord, setFocusRecord } = props;
-  const { participants } = focusRecord;
-  console.log(formik);
+const RecordCost = ({ formik }) => {
+  const { participants } = formik.values;
   return (
     <>
-      {Object.entries(participants)
-        .filter(([_, participant]) => participant.targeted)
-        .map(([name, participant]) => {
-          console.log(formik.errors);
-          return (
-            <Input
-              name={`participants[${name}].cost`}
-              key={name}
-              text={name}
-              value={formik.values[name]}
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              touched={formik?.touched?.participants?.[name]}
-              errors={formik.errors[name]}
-              placeholder="enter somthing"
-            ></Input>
-          );
-        })}
+      {filterParticipants(participants).map(([name]) => (
+        <Input
+          name={`participants[${name}].cost`}
+          key={name}
+          text={name}
+          value={formik.values[name]}
+          onChange={formik.handleChange}
+          onBlur={formik.handleBlur}
+          touched={formik?.touched?.participants?.[name]}
+          errors={formik.errors[name]}
+          placeholder="enter somthing"
+        ></Input>
+      ))}
     </>
   );
 };
@@ -34,11 +26,10 @@ export default RecordCost;
 export const RecordCostValidator = (formikValues) => {
   const errors = {};
   const { participants } = formikValues;
-  Object.values(participants)
-    .filter(({ targeted, cost }) => targeted && cost === "")
-    .forEach((failed) => {
+  filterParticipants(participants, { filter: { targeted: true, cost: "" } }).forEach(
+    ([_, failed]) => {
       errors[failed.key] = failed;
-    });
-  console.log(errors);
+    }
+  );
   return errors;
 };

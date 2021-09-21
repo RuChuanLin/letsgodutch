@@ -1,4 +1,3 @@
-import React from "react";
 import { Transfer } from "antd";
 import { useSelector, useDispatch } from "react-redux";
 
@@ -9,7 +8,7 @@ const filterObject = ({ participants }, filterKey) =>
     .filter(([_, v]) => v?.[filterKey])
     .map(([name]) => name);
 
-const SelectParticipants = () => {
+const SelectParticipants = ({ formik }) => {
   const focusRecord = useSelector((state) => state.focusRecord);
   const dispatch = useDispatch();
   const setFocusRecord = (patch) => dispatch(updateFocusRecord(patch));
