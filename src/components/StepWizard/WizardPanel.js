@@ -6,10 +6,15 @@ const Wrapper = styled.div`
   justify-content: space-between;
   align-items: center;
   padding: 12px;
+<<<<<<< HEAD
 `;
 
 const LeftWrapper = styled.div``;
 const RightWrapper = styled.div`
+=======
+  justify-content: flex-end;
+  align-items: center;
+>>>>>>> cb80f295808f66b514ed00182dff5b8812047f7b
   button {
     margin-left: 12px;
   }
