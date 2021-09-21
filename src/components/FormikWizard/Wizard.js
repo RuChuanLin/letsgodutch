@@ -18,12 +18,14 @@ const Wizard = (props) => {
     activeStepIndex: 0,
     totalSteps: getTotalSteps(props.children),
     stepTabs: [],
+    direction: 0,
   });
 
   const onPreviousStep = () =>
     setState(
       produce(state, (draftState) => {
         draftState.activeStepIndex = state.activeStepIndex - 1;
+        draftState.direction = -1;
       })
     );
 
@@ -31,6 +33,7 @@ const Wizard = (props) => {
     setState(
       produce(state, (draftState) => {
         draftState.activeStepIndex = state.activeStepIndex + 1;
+        draftState.direction = 1;
       })
     );
 
@@ -54,6 +57,7 @@ const Wizard = (props) => {
         stepsComponent = cloneElement(child, {
           activeStepIndex: state.activeStepIndex,
           updateStepTabs: updateStepTabs,
+          direction: state.direction,
           ...otherProps,
         });
         if (child.props.validators) {

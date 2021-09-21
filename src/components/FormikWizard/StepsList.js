@@ -1,5 +1,11 @@
 import React, { Children, cloneElement, useEffect } from "react";
+import styled from "styled-components";
 import PropTypes from "prop-types";
+
+const Wrapper = styled.div`
+  position: relative;
+  height: 200px;
+`;
 
 const StepsList = (props) => {
   useEffect(() => {
@@ -13,7 +19,7 @@ const StepsList = (props) => {
   }, []);
 
   const getStepChildren = () => {
-    const { activeStepIndex, children, ...formik } = props;
+    const { activeStepIndex, children, direction, ...formik } = props;
     const stepTabs = [];
     const newChildren = Children.map(children, (child, index) => {
       if (child.props.title) {
@@ -22,12 +28,13 @@ const StepsList = (props) => {
       return cloneElement(child, {
         isActive: index === activeStepIndex,
         formik,
+        direction,
       });
     });
     return newChildren;
   };
 
-  return <div formik={props}>{getStepChildren()}</div>;
+  return <Wrapper>{getStepChildren()}</Wrapper>;
 };
 
 StepsList.propTypes = {

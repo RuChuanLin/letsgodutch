@@ -2,7 +2,6 @@ import { produce } from "immer";
 import { Radio, Space } from "antd";
 
 const SelectPayer = ({ formik }) => {
-  debugger;
   const { participants, payer } = formik.values;
   return (
     <>

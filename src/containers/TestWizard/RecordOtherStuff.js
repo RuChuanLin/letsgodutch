@@ -1,5 +1,4 @@
 import { produce } from "immer";
-import { updateState } from "../../utils/updateState";
 
 import Input from "../../components/Input";
 

@@ -1,6 +1,7 @@
 import { Transfer } from "antd";
 import { filterParticipants } from "../../utils/common";
 import { updateState } from "../../utils/updateState";
+import { produce } from "immer";
 
 const filterObject = (participants, filterKey) =>
   filterParticipants(participants, { filter: { [filterKey]: true } }).map(([name]) => name);
@@ -25,6 +26,7 @@ const SelectParticipants = ({ formik }) => {
   };
 
   const onChange = (nextTargetKeys) => {
+    // TODO 改成用 immer
     updateState({
       originalState: { participants },
       updatedState: participantChangeHandler([
@@ -44,7 +46,6 @@ const SelectParticipants = ({ formik }) => {
     });
   };
 
-  console.log(participants);
   return (
     <>
       <Transfer
@@ -75,6 +76,6 @@ SelectParticipants.validate = (formik) => {
   return errors;
 };
 
-SelectParticipants.title ='請選擇參與訂餐人'
+SelectParticipants.title = "請選擇參與訂餐人";
 
 export default SelectParticipants;

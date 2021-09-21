@@ -1,6 +1,13 @@
 import React, { Children } from "react";
+import styled from "styled-components";
 import PropTypes from "prop-types";
 import Button from "./Button";
+
+const Wrapper = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  padding: 24px;
+`;
 
 const ButtonsList = ({
   activeStepIndex,
@@ -11,25 +18,24 @@ const ButtonsList = ({
   children,
   validators,
 }) => (
-  <div className="react-formik-wizard__footer">
+  <Wrapper>
     {Children.map(children, (child) => {
       const validator = validators[activeStepIndex];
       if (child.type.displayName === "PreviousButton") {
         return (
-          <div className="previous">
-            <Button
-              className="react-formik-wizard__footer__button react-formik-wizard__footer__button--previous"
-              show={activeStepIndex > 0}
-              onClick={onPreviousStep}
-              label="Previous"
-              {...child.props}
-            />
-          </div>
+          <Button
+            type="link"
+            show={activeStepIndex > 0}
+            onClick={onPreviousStep}
+            label="Previous"
+            {...child.props}
+          />
         );
       }
       if (child.type.displayName === "NextButton") {
         return (
           <Button
+            type="primary"
             show={activeStepIndex < totalSteps}
             onClick={onNextStep}
             validator={validator}
@@ -41,7 +47,6 @@ const ButtonsList = ({
       if (child.type.displayName === "SubmitButton") {
         return (
           <Button
-            className="react-formik-wizard__footer__button react-formik-wizard__footer__button--submit"
             show={activeStepIndex === totalSteps}
             onClick={onSubmit}
             validator={validator}
@@ -53,7 +58,7 @@ const ButtonsList = ({
       }
       return child;
     })}
-  </div>
+  </Wrapper>
 );
 
 ButtonsList.propTypes = {

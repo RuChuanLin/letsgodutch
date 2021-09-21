@@ -1,19 +1,12 @@
-import { useEffect } from "react";
-
 import Input from "../../components/Input";
 import { filterParticipants } from "../../utils/common";
 
 const RecordCost = ({ formik }) => {
   const { participants } = formik.values;
 
-  useEffect(() => {
-    formik.validateForm();
-  }, []);
-
   return (
     <>
       {filterParticipants(participants).map(([name]) => {
-        console.log(formik.values);
         return (
           <Input
             name={`participants[${name}].cost`}
@@ -40,7 +33,7 @@ RecordCost.validate = (formik) => {
     filterParticipants(participants, { filter: { targeted: true, cost: "" } }).length > 0;
 
   if (existUnfilled) {
-    errorMsgs.push("需填寫所有訂餐人金額。若沒有出錢請回上一步移除訂餐人。");
+    errorMsgs.push("需填寫所有訂餐人金額。若沒有訂餐請回上一步移除訂餐人。");
   }
 
   if (errorMsgs.length > 0) {
@@ -49,6 +42,6 @@ RecordCost.validate = (formik) => {
   return errors;
 };
 
-RecordCost.title = '請輸入訂餐金額'
+RecordCost.title = "請輸入訂餐金額";
 
 export default RecordCost;
