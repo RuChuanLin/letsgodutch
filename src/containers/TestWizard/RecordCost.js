@@ -3,35 +3,42 @@ import { Form, InputNumber } from "antd";
 import Input from "../../components/Input";
 
 const RecordCost = (props) => {
-  const { focusRecord, setFocusRecord } = props;
+  const { formik, focusRecord, setFocusRecord } = props;
   const { participants } = focusRecord;
+  console.log(formik);
   return (
     <>
-      <div>
-        {Object.entries(participants)
-          .filter(([_, participant]) => participant.targeted)
-          .map(([name, participant]) => {
-            return (
-              <Input
-                key={name}
-                text={name}
-                value={participant.cost}
-                onChange={(e) => {
-                  const { value } = e.target;
-                  const cost = value === "" ? value : +value;
-                  const change = {
-                    participants: { [name]: { cost: { $set: cost } } },
-                  };
-                  const updatedFocusRecord = updateState(focusRecord, change);
-                  setFocusRecord(updatedFocusRecord);
-                }}
-                placeholder="enter somthing"
-              ></Input>
-            );
-          })}
-      </div>
+      {Object.entries(participants)
+        .filter(([_, participant]) => participant.targeted)
+        .map(([name, participant]) => {
+          console.log(formik.errors);
+          return (
+            <Input
+              name={`participants[${name}].cost`}
+              key={name}
+              text={name}
+              value={formik.values[name]}
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              touched={formik?.touched?.participants?.[name]}
+              errors={formik.errors[name]}
+              placeholder="enter somthing"
+            ></Input>
+          );
+        })}
     </>
   );
 };
 
 export default RecordCost;
+export const RecordCostValidator = (formikValues) => {
+  const errors = {};
+  const { participants } = formikValues;
+  Object.values(participants)
+    .filter(({ targeted, cost }) => targeted && cost === "")
+    .forEach((failed) => {
+      errors[failed.key] = failed;
+    });
+  console.log(errors);
+  return errors;
+};

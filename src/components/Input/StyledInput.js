@@ -1,4 +1,5 @@
 import styled from "styled-components";
+
 import { colors } from "../../utils/colors";
 
 const StyledInput = styled.input`
@@ -7,7 +8,11 @@ const StyledInput = styled.input`
   width: 155px;
   height: 36px;
   border-radius: 2px;
-  border: 1px ${(props) => (props.value !== '' ? colors.white : colors.getGray(0.2))} solid;
+  border: 1px
+    ${({ errors, touched }) => {
+      return errors && touched ? "red" : colors.getGray(0.2);
+    }}
+    solid;
   padding-left: 4px;
   font-size: ${(props) => props.fontSize}px;
   transition: 0.2s ease-in-out;
@@ -15,10 +20,10 @@ const StyledInput = styled.input`
     border: 1px ${colors.getGray(0.25)} solid;
     background-color: ${colors.getGray(0.15)};
   }
-  &:focus {
+  /* &:focus {
     background-color: ${colors.white};
     border: 1px ${colors.primaryBackgroundLight} solid;
-  }
+  } */
   ::-webkit-inner-spin-button {
     -webkit-appearance: none;
     margin: 0;
@@ -29,4 +34,10 @@ const StyledInput = styled.input`
   }
 `;
 
-export default (props, {type = 'number'}) => <StyledInput type={type} {...props}></StyledInput>;
+export default ({ type = "number", ...props }) => {
+  return (
+    <div>
+      <StyledInput type={type} {...props}></StyledInput>
+    </div>
+  );
+};

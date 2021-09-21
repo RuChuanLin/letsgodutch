@@ -22,6 +22,7 @@ const Wrapper = styled.div`
 `;
 
 const StepWizard = ({
+  formik,
   focusRecord,
   setFocusRecord,
   stepPages,
@@ -54,17 +55,6 @@ const StepWizard = ({
     setState({ ...state, activeStep });
   };
 
-  const validate = () => {
-    // const { errorMsgs } = focusRecord;
-    // if (!errorMsgs) {
-    //   return true;
-    // }
-    // return Object.entries(errorMsgs)
-    //   .filter(([_, existError]) => existError)
-    //   .map(([errorMsg]) => errorMsg);
-    return true; // TODO 之後研究怎麼寫驗證
-  };
-
   return (
     <>
       <Button type="primary" onClick={showModal} style={{ marginRight: 12 }}>
@@ -88,6 +78,7 @@ const StepWizard = ({
                 onFinished();
                 handleCancel();
               }}
+              formik={formik}
             ></WizardPanel>
           ),
         ]}
@@ -104,6 +95,7 @@ const StepWizard = ({
               <Wrapper key={step}>
                 <Typography.Title level={3}>{stepPage?.title}</Typography.Title>
                 <stepPage.Page
+                  formik={formik}
                   focusRecord={focusRecord}
                   setFocusRecord={setFocusRecord}
                 ></stepPage.Page>

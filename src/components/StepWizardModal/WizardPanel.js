@@ -24,6 +24,7 @@ const WizardPanel = ({
   finishText = "Finish",
   ExtraPanelInfo,
   onFinished,
+  formik,
 }) => {
   const { totalSteps } = SW;
   return (
@@ -32,7 +33,7 @@ const WizardPanel = ({
       <RightWrapper>
         {activeStep > 1 && <Button onClick={SW.previousStep}>{prevText}</Button>}
         {activeStep < totalSteps ? (
-          <Button disabled={errorMsgs.length > 0} type="primary" onClick={SW.nextStep}>
+          <Button disabled={formik.errors && Object.keys(formik.errors).length > 0} type="primary" onClick={SW.nextStep}>
             {nextText}
           </Button>
         ) : (
