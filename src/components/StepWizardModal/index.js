@@ -30,9 +30,10 @@ const StepWizard = ({
   buttonTitle = "Open Modal",
   title,
   onFinished,
+  activeStep,
+  setActiveStep,
 }) => {
   const [state, setState] = useState({
-    activeStep: 1,
     isModalVisible: false,
   });
 
@@ -49,11 +50,11 @@ const StepWizard = ({
       SW,
     });
 
-  const { SW, activeStep } = state;
+  const { SW } = state;
 
-  const onStepChange = ({ activeStep }) => {
-    setState({ ...state, activeStep });
-  };
+  // const onStepChange = ({ activeStep }) => {
+  //   setState({ ...state, activeStep });
+  // };
 
   return (
     <>
@@ -85,7 +86,7 @@ const StepWizard = ({
         centered
       >
         <Wizard
-          onStepChange={onStepChange}
+          onStepChange={({ activeStep }) => setActiveStep(activeStep)}
           transitions={state.isModalVisible && transitions}
           instance={setInstance}
         >

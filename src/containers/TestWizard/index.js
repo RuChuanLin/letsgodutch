@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { addNewRecord } from "../../actions/recordAction";
 import StepWizardModal from "../../components/StepWizardModal";
 
-import SelectParticipants from "./SelectParticipants";
+import SelectParticipants, { SelectParticipantsValidator } from "./SelectParticipants";
 import RecordCost, { RecordCostValidator } from "./RecordCost";
 import SelectPayer from "./SelectPayer";
 import RecordOtherStuff from "./RecordOtherStuff";
@@ -20,6 +20,8 @@ const Test = () => {
       Gary: { key: "Gary", name: "Gary", targeted: true, cost: "" },
     },
   });
+
+  const [activeStep, setActiveStep] = useState(1);
 
   const formik = useFormik({
     initialValues: {
@@ -58,8 +60,8 @@ const Test = () => {
       payer: "",
     },
     validateOnChange: true,
-    // validateOnMount: true,
-    validate: RecordCostValidator,
+    validateOnMount: true,
+    validate: [SelectParticipantsValidator, RecordCostValidator][activeStep - 1],
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2));
     },
@@ -88,6 +90,8 @@ const Test = () => {
         ExtraPanelInfo={ExtraPanelInfo}
         onFinished={onFinished}
         formik={formik}
+        activeStep={activeStep}
+        setActiveStep={setActiveStep}
         stepPages={[
           {
             title: "請選擇參與訂餐人",

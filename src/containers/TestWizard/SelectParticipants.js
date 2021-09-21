@@ -1,42 +1,47 @@
 import { Transfer } from "antd";
-import { useSelector, useDispatch } from "react-redux";
+import { filterParticipants } from "../../utils/common";
+import { updateState } from "../../utils/updateState";
 
-import { updateFocusRecord } from "../../actions/focusRecordAction";
-
-const filterObject = ({ participants }, filterKey) =>
-  Object.entries(participants)
-    .filter(([_, v]) => v?.[filterKey])
-    .map(([name]) => name);
+const filterObject = (participants, filterKey) =>
+  filterParticipants(participants, { filter: { [filterKey]: true } }).map(([name]) => name);
 
 const SelectParticipants = ({ formik }) => {
-  const focusRecord = useSelector((state) => state.focusRecord);
-  const dispatch = useDispatch();
-  const setFocusRecord = (patch) => dispatch(updateFocusRecord(patch));
-
-  const { participants } = focusRecord;
-
-  const participantChangeHandler = (keys, action) => {
-    const keySet = new Set(keys);
+  const { participants } = formik.values;
+  const participantChangeHandler = (options) => {
     const patchObject = {};
-    Object.entries(participants).forEach(([name, obj]) => {
-      const included = keySet.has(name);
-      if (obj[action] !== included) {
-        if (!patchObject[name]) {
-          patchObject[name] = {};
+    options.forEach(({ keys, action }) => {
+      const keySet = new Set(keys);
+      Object.entries(participants).forEach(([name, obj]) => {
+        const included = keySet.has(name);
+        if (obj[action] !== included) {
+          if (!patchObject[name]) {
+            patchObject[name] = {};
+          }
+          patchObject[name][action] = { $set: included };
         }
-        patchObject[name][action] = { $set: included };
-      }
+      });
     });
     return { participants: patchObject };
   };
 
   const onChange = (nextTargetKeys) => {
-    setFocusRecord(participantChangeHandler(nextTargetKeys, "targeted"));
+    updateState({
+      originalState: { participants },
+      updatedState: participantChangeHandler([
+        { keys: [], action: "selected" },
+        { keys: nextTargetKeys, action: "targeted" },
+      ]),
+      setState: formik.setValues,
+    });
   };
 
   const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
     const selectedKeys = [...sourceSelectedKeys, ...targetSelectedKeys];
-    setFocusRecord(participantChangeHandler(selectedKeys, "selected"));
+    updateState({
+      originalState: { participants },
+      updatedState: participantChangeHandler([{ keys: selectedKeys, action: "selected" }]),
+      setState: formik.setValues,
+    });
   };
 
   return (
@@ -44,8 +49,8 @@ const SelectParticipants = ({ formik }) => {
       <Transfer
         dataSource={Object.values(participants)}
         titles={["未訂餐", "有要訂餐"]}
-        targetKeys={filterObject(focusRecord, "targeted")}
-        selectedKeys={filterObject(focusRecord, "selected")}
+        targetKeys={filterObject(participants, "targeted")}
+        selectedKeys={filterObject(participants, "selected")}
         onChange={onChange}
         onSelectChange={onSelectChange}
         render={(item) => item.name}
@@ -55,3 +60,17 @@ const SelectParticipants = ({ formik }) => {
 };
 
 export default SelectParticipants;
+
+export const SelectParticipantsValidator = (formikValues) => {
+  console.log(formikValues);
+  const errors = {};
+  const errorMsgs = [];
+  const { participants } = formikValues;
+  if (filterParticipants(participants).length < 2) {
+    errorMsgs.push("至少需選取2個訂餐人");
+  }
+  if (errorMsgs.length > 0) {
+    errors.msgs = errorMsgs;
+  }
+  return errors;
+};
