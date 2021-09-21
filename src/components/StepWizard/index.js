@@ -17,7 +17,6 @@ const Wizard = ({ focusRecord, setFocusRecord, stepPages, ExtraPanelInfo }) => {
     activeStep: 0,
   });
 
-  console.log(focusRecord);
   const setInstance = (SW) =>
     setState({
       ...state,
@@ -32,11 +31,7 @@ const Wizard = ({ focusRecord, setFocusRecord, stepPages, ExtraPanelInfo }) => {
 
   return (
     <div>
-      <StepWizard
-        onStepChange={onStepChange}
-        transitions={transitions}
-        instance={setInstance}
-      >
+      <StepWizard onStepChange={onStepChange} transitions={transitions} instance={setInstance}>
         {stepPages.map((stepPage, i) => {
           const step = `step${i}`;
           return (

@@ -5,49 +5,50 @@ import { filterParticipants } from "../../utils/common";
 
 const RecordCost = ({ formik }) => {
   const { participants } = formik.values;
-  
+
   useEffect(() => {
-    console.log(123)
     formik.validateForm();
   }, []);
 
-  
   return (
     <>
-      {filterParticipants(participants).map(([name]) => (
-        <Input
-          name={`participants[${name}].cost`}
-          key={name}
-          text={name}
-          value={formik.values[name]}
-          onChange={formik.handleChange}
-          onBlur={formik.handleBlur}
-          touched={formik?.touched?.participants?.[name]}
-          errors={formik.errors[name]}
-          placeholder="enter somthing"
-        ></Input>
-      ))}
+      {filterParticipants(participants).map(([name]) => {
+        console.log(formik.values);
+        return (
+          <Input
+            name={`participants[${name}].cost`}
+            key={name}
+            text={name}
+            value={formik?.values?.participants?.[name]?.cost}
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            touched={formik?.touched?.participants?.[name]}
+            errors={formik.errors[name]}
+            placeholder="enter somthing"
+          ></Input>
+        );
+      })}
     </>
   );
 };
 
-export default RecordCost;
-export const RecordCostValidator = (formikValues) => {
+RecordCost.validate = (formik) => {
   const errors = {};
   const errorMsgs = [];
-  const { participants } = formikValues;
-  filterParticipants(participants, { filter: { targeted: true, cost: "" } }).forEach(
-    ([_, failed]) => {
-      errors[failed.key] = failed;
-    }
-  );
+  const { participants } = formik.values;
+  const existUnfilled =
+    filterParticipants(participants, { filter: { targeted: true, cost: "" } }).length > 0;
 
-  if (Object.keys(errors).length > 0) {
-    errorMsgs.push("有問題");
+  if (existUnfilled) {
+    errorMsgs.push("需填寫所有訂餐人金額。若沒有出錢請回上一步移除訂餐人。");
   }
 
   if (errorMsgs.length > 0) {
-    errors.msgs = errorMsgs;
+    errors.errorMsgs = errorMsgs;
   }
   return errors;
 };
+
+RecordCost.title = '請輸入訂餐金額'
+
+export default RecordCost;

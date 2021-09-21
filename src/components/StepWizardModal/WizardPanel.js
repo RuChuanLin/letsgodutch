@@ -30,7 +30,6 @@ const WizardPanel = ({
   const { totalSteps } = SW;
   const { msgs } = formik.errors;
   const disabledNext = formik.errors && Object.keys(formik.errors).length > 0;
-  console.log(formik.errors)
   const [tooltipVisible, setTooltipVisible] = useState(false);
   return (
     <Wrapper>

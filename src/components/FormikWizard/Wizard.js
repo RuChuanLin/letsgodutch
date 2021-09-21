@@ -20,8 +20,6 @@ const Wizard = (props) => {
     stepTabs: [],
   });
 
-  console.log(state);
-
   const onPreviousStep = () =>
     setState(
       produce(state, (draftState) => {
@@ -47,7 +45,6 @@ const Wizard = (props) => {
 
   const getInitialComponents = () => {
     const { children, ...otherProps } = props;
-    console.log(otherProps);
     let stepsComponent = null;
     let buttonsListComponent = null;
     let validators = [];
@@ -83,7 +80,7 @@ const Wizard = (props) => {
 
   return (
     <div>
-      <StepTabs tabs={state.stepTabs} activeStepIndex={state.activeStepIndex} />
+      {/* <StepTabs tabs={state.stepTabs} activeStepIndex={state.activeStepIndex} /> */}
       {stepsComponent}
       {buttonsListComponent}
     </div>

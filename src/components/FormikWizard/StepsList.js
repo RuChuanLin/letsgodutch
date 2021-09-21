@@ -1,6 +1,5 @@
 import React, { Children, cloneElement, useEffect } from "react";
 import PropTypes from "prop-types";
-import { produce } from "immer";
 
 const StepsList = (props) => {
   useEffect(() => {
@@ -14,8 +13,7 @@ const StepsList = (props) => {
   }, []);
 
   const getStepChildren = () => {
-    //   debugger
-    const { activeStepIndex, children, ...otherProps } = props;
+    const { activeStepIndex, children, ...formik } = props;
     const stepTabs = [];
     const newChildren = Children.map(children, (child, index) => {
       if (child.props.title) {
@@ -23,13 +21,13 @@ const StepsList = (props) => {
       }
       return cloneElement(child, {
         isActive: index === activeStepIndex,
-        ...otherProps,
+        formik,
       });
     });
     return newChildren;
   };
 
-  return <div className="react-formik-wizard__step-page">a{getStepChildren()}b</div>;
+  return <div formik={props}>{getStepChildren()}</div>;
 };
 
 StepsList.propTypes = {

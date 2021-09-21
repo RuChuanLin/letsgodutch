@@ -1,9 +1,6 @@
-import moment from 'moment'
+import moment from "moment";
 
-import {
-  RECORDS__ADD_RECORD,
-  RECORDS__LOAD_ALL_RECORD,
-} from "../constants/recordConst";
+import { RECORDS__ADD_RECORD, RECORDS__LOAD_ALL_RECORD } from "../constants/recordConst";
 import { getRecordDB } from "../firebase";
 
 export const fetchAllRecords =
@@ -16,7 +13,6 @@ export const fetchAllRecords =
         .get()
         .then((snapshots) => {
           const allRecords = snapshots.docs.map((snapshot) => snapshot.data());
-          console.log(allRecords);
           dispatch({ type: RECORDS__LOAD_ALL_RECORD, payload: allRecords });
         });
     } else {
@@ -30,13 +26,11 @@ export const addNewRecord =
     if (!newRecord) {
       return;
     }
-    const arrangedRecord = {...newRecord, date : new moment().valueOf()}
+    const arrangedRecord = { ...newRecord, date: new moment().valueOf() };
     if (toCloud) {
       getRecordDB()
         .add(arrangedRecord)
-        .then(() =>
-          dispatch({ type: RECORDS__ADD_RECORD, payload: arrangedRecord })
-        );
+        .then(() => dispatch({ type: RECORDS__ADD_RECORD, payload: arrangedRecord }));
     } else {
       dispatch({ type: RECORDS__ADD_RECORD, payload: arrangedRecord });
     }

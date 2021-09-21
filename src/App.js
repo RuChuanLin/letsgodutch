@@ -7,7 +7,7 @@ import { fetchAllUsers } from "./actions/userAction";
 import DataTable from "./containers/DataTable";
 import Panel from "./containers/Panel";
 
-import FormikWizard from './components/FormikWizard/_Tmp'
+import FormikWizard from './containers/TestWizard'
 
 const App = () => {
   // const dispatch = useDispatch();

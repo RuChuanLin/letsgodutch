@@ -1,19 +1,20 @@
-import updateState from "immutability-helper";
-
+import { produce } from "immer";
 import { Radio, Space } from "antd";
 
-const SelectPayer = (props) => {
-  const { focusRecord, setFocusRecord } = props;
-  const { participants, payer } = focusRecord;
-
+const SelectPayer = ({ formik }) => {
+  debugger;
+  const { participants, payer } = formik.values;
   return (
     <>
       <Radio.Group
         buttonStyle="solid"
         value={payer}
         onChange={(e) => {
-          const updatedState = { payer: { $set: e.target.value } };
-          setFocusRecord(updateState(focusRecord, updatedState));
+          formik.setValues(
+            produce(formik.values, (draft) => {
+              draft.payer = e.target.value;
+            })
+          );
         }}
       >
         <Space direction="vertical">
@@ -29,5 +30,22 @@ const SelectPayer = (props) => {
     </>
   );
 };
+
+SelectPayer.validate = (formik) => {
+  const errors = {};
+  const errorMsgs = [];
+  const { payer } = formik.values;
+
+  if (!payer) {
+    errorMsgs.push("請選擇付款人");
+  }
+
+  if (errorMsgs.length > 0) {
+    errors.errorMsgs = errorMsgs;
+  }
+  return errors;
+};
+
+SelectPayer.title = "請選擇付款人";
 
 export default SelectPayer;

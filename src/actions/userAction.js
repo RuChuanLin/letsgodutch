@@ -20,7 +20,6 @@ export const fetchAllUsers =
 export const addUser =
   ({ userName } = {}) =>
   (dispatch, getState) => {
-    console.log(getState());
     if (userName) {
       const nameObject = {
         name: userName,

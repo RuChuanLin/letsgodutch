@@ -1,121 +1,61 @@
-import React, { useState } from "react";
-import { useFormik } from "formik";
-import { useDispatch } from "react-redux";
-import { addNewRecord } from "../../actions/recordAction";
-import StepWizardModal from "../../components/StepWizardModal";
+import withFormik from "./withFormik";
+
+import {
+  FormikWizardProvider,
+  Wizard,
+  StepsList,
+  Step,
+  ButtonsList,
+  PreviousButton,
+  NextButton,
+  // SubmitButton,
+} from "../../components/FormikWizard";
 
 import SelectParticipants, { SelectParticipantsValidator } from "./SelectParticipants";
 import RecordCost, { RecordCostValidator } from "./RecordCost";
 import SelectPayer from "./SelectPayer";
 import RecordOtherStuff from "./RecordOtherStuff";
 
-const Test = () => {
-  const dispatch = useDispatch();
+function App(props) {
+  const components = [SelectParticipants, RecordCost, SelectPayer, RecordOtherStuff];
 
-  const [focusRecord, setFocusRecord] = useState({
-    participants: {
-      River: { key: "River", name: "River", targeted: true, cost: "" },
-      Jill: { key: "Jill", name: "Jill", targeted: true, cost: "" },
-      Tony: { key: "Tony", name: "Tony", targeted: true, cost: "" },
-      Gary: { key: "Gary", name: "Gary", targeted: true, cost: "" },
-    },
-  });
-
-  const [activeStep, setActiveStep] = useState(1);
-
-  const formik = useFormik({
-    initialValues: {
-      delivery: {
-        fee: 0,
-      },
-      discount: {
-        amount: 0,
-      },
-      participants: {
-        River: {
-          key: "River",
-          name: "River",
-          targeted: true,
-          cost: "",
-        },
-        Jill: {
-          key: "Jill",
-          name: "Jill",
-          targeted: true,
-          cost: "",
-        },
-        Tony: {
-          key: "Tony",
-          name: "Tony",
-          targeted: true,
-          cost: "",
-        },
-        Gary: {
-          key: "Gary",
-          name: "Gary",
-          targeted: true,
-          cost: "",
-        },
-      },
-      payer: "",
-    },
-    validateOnChange: true,
-    validateOnMount: true,
-    validate: [SelectParticipantsValidator, RecordCostValidator][activeStep - 1],
-    onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2));
-    },
-  });
-
-  const ExtraPanelInfo = () => {
-    const { delivery, discount } = focusRecord;
-    const totalCost =
-      Object.values(focusRecord.participants)
-        .filter((participant) => participant.targeted)
-        .reduce((acc, cur) => acc + (cur.cost || 0), 0) +
-      (delivery?.fee || 0) -
-      (discount?.amount || 0);
-    return <span>總額：{totalCost}</span>;
-  };
-
-  const onFinished = () => {
-    dispatch(addNewRecord({ toCloud: true, newRecord: focusRecord }));
-  };
+  // return (
+  //   <div className="App">
+  //     <FormikWizardProvider {...props}>
+  //       {({ getValidators, ...formik }) => (
+  //         <Wizard {...formik}>
+  //           <StepsList
+  //             validators={getValidators(components.map(({ validate }) => validate || (() => true)))}
+  //           >
+  //             {components.map((component) => {
+  //               <Step component={component} key={component.displayName}></Step>;
+  //             })}
 
   return (
-    <>
-      <StepWizardModal
-        focusRecord={focusRecord}
-        setFocusRecord={setFocusRecord}
-        ExtraPanelInfo={ExtraPanelInfo}
-        onFinished={onFinished}
-        formik={formik}
-        activeStep={activeStep}
-        setActiveStep={setActiveStep}
-        stepPages={[
-          {
-            title: "請選擇參與訂餐人",
-            Page: SelectParticipants,
-          },
-          {
-            title: "輸入金額",
-            Page: RecordCost,
-            validate: (values) => {
-              console.log(values);
-            },
-          },
-          {
-            title: "請選擇付款人",
-            Page: SelectPayer,
-          },
-          {
-            title: "其他選項",
-            Page: RecordOtherStuff,
-          },
-        ]}
-      ></StepWizardModal>
-    </>
+    <div className="App">
+      <FormikWizardProvider {...props}>
+        {({ getValidators, ...formik }) => (
+          <Wizard {...formik}>
+            <StepsList
+              validators={getValidators(components.map(({ validate }) => validate || (() => true)))}
+            >
+              {components.map((c) => (
+                <Step key={c.title} component={c}></Step>
+              ))}
+            </StepsList>
+            <ButtonsList {...formik}>
+              <PreviousButton />
+              <NextButton />
+              {/* <SubmitButton /> */}
+            </ButtonsList>
+          </Wizard>
+        )}
+      </FormikWizardProvider>
+      {/* <DisplayFormikState {...props} /> */}
+    </div>
   );
-};
+}
 
-export default Test;
+const WithFormikApp = withFormik(App);
+
+export default WithFormikApp;

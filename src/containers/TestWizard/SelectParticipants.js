@@ -44,6 +44,7 @@ const SelectParticipants = ({ formik }) => {
     });
   };
 
+  console.log(participants);
   return (
     <>
       <Transfer
@@ -59,18 +60,21 @@ const SelectParticipants = ({ formik }) => {
   );
 };
 
-export default SelectParticipants;
-
-export const SelectParticipantsValidator = (formikValues) => {
-  console.log(formikValues);
+SelectParticipants.validate = (formik) => {
   const errors = {};
   const errorMsgs = [];
-  const { participants } = formikValues;
+  const { participants } = formik.values;
   if (filterParticipants(participants).length < 2) {
     errorMsgs.push("至少需選取2個訂餐人");
   }
+
   if (errorMsgs.length > 0) {
-    errors.msgs = errorMsgs;
+    errors.errorMsgs = errorMsgs;
   }
+
   return errors;
 };
+
+SelectParticipants.title ='請選擇參與訂餐人'
+
+export default SelectParticipants;

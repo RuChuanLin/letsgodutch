@@ -1,26 +1,19 @@
-import { useEffect } from "react";
-import PropTypes from "prop-types";
-import { Form } from "formik";
+import FormikWizardProvider from "./FormikWizardProvider";
+import Wizard from "./Wizard";
+import StepsList from "./StepsList";
+import Step from "./Step";
+import ButtonsList from "./ButtonsList";
+import PreviousButton from "./PreviousButton";
+import NextButton from "./NextButton";
+// import SubmitButton from "./SubmitButton";
 
-const FormikWizard = (props) => {
-  useEffect(() => {
-    props.validateForm();
-  }, []);
-  const getValidators = (validatorFuncs) => validatorFuncs.map((func) => () => func({ ...props }));
-
-  return (
-    <Form>
-      {props.children({
-        getValidators: (validators) => getValidators(validators),
-        ...props,
-      })}
-    </Form>
-  );
+export {
+  FormikWizardProvider,
+  Wizard,
+  StepsList,
+  Step,
+  ButtonsList,
+  PreviousButton,
+  NextButton,
+//   SubmitButton,
 };
-
-FormikWizard.propTypes = {
-  validateForm: PropTypes.func,
-  children: PropTypes.func,
-};
-
-export default FormikWizard;
