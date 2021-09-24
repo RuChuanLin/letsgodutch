@@ -1,9 +1,12 @@
+import Modal from "../../../components/Modal";
+
 import FormikWizard from "../../../components/FormikWizard";
 
 import SelectParticipants from "./SelectParticipants";
 import RecordCost from "./RecordCost";
 import SelectPayer from "./SelectPayer";
 import RecordOtherStuff from "./RecordOtherStuff";
+import ResultsPreview from "./ResultsPreview";
 
 const initialValues = {
   delivery: {
@@ -42,10 +45,12 @@ const initialValues = {
   errorMsgs: [],
 };
 
-const components = [SelectParticipants, RecordCost, SelectPayer, RecordOtherStuff];
+const components = [SelectParticipants, RecordCost, SelectPayer, RecordOtherStuff, ResultsPreview];
 
-function AddNewRecord() {
-  return <FormikWizard initialValues={initialValues} components={components}></FormikWizard>;
-}
+const App = () => (
+  <Modal>
+    <FormikWizard initialValues={initialValues} components={components}></FormikWizard>
+  </Modal>
+);
 
-export default AddNewRecord;
+export default App;

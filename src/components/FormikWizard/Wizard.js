@@ -1,6 +1,6 @@
 import React, { Children, cloneElement, useState } from "react";
 import PropTypes from "prop-types";
-import StepTabs from "./StepTabs";
+// import StepTabs from "./StepTabs";
 import { produce } from "immer";
 
 const getTotalSteps = (children) => {

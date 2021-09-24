@@ -1,5 +1,6 @@
 import { Table } from "antd";
 import { useSelector } from "react-redux";
+import { fixNumber } from "../utils/common";
 
 import moment from "moment";
 
@@ -24,7 +25,7 @@ const generateColumns = (events) => {
         render: (cost) => cost || 0,
         children: [
           {
-            title: Math.round((totalCostAmount[participant] + Number.EPSILON) * 100) / 100,
+            title: fixNumber(totalCostAmount[participant]),
             dataIndex: participant,
             key: participant,
           },

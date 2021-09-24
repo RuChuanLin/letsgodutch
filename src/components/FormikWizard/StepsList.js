@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 
 const Wrapper = styled.div`
   position: relative;
-  height: 200px;
+  height: 344px;
 `;
 
 const StepsList = (props) => {

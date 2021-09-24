@@ -6,7 +6,7 @@ import Button from "./Button";
 const Wrapper = styled.div`
   display: flex;
   justify-content: flex-end;
-  padding: 24px;
+  margin-top: 24px;
 `;
 
 const ButtonsList = ({

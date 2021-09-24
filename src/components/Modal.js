@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { Modal, Button } from "antd";
 
-const CustomModal = ({buttonTitle = 'Open Modal', title, okFunction, children}) => {
+const CustomModal = ({ buttonTitle = "Open Modal", title, okFunction, children }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -9,7 +9,7 @@ const CustomModal = ({buttonTitle = 'Open Modal', title, okFunction, children}) 
   };
 
   const handleOk = () => {
-    okFunction()
+    okFunction();
     setIsModalVisible(false);
   };
 
@@ -19,7 +19,7 @@ const CustomModal = ({buttonTitle = 'Open Modal', title, okFunction, children}) 
 
   return (
     <>
-      <Button type="primary" onClick={showModal} style={{marginRight:12}}>
+      <Button type="primary" onClick={showModal} style={{ marginRight: 12 }}>
         {buttonTitle}
       </Button>
       <Modal
@@ -29,8 +29,9 @@ const CustomModal = ({buttonTitle = 'Open Modal', title, okFunction, children}) 
         onCancel={handleCancel}
         footer={null}
         centered
+        style={{ overflow: "auto", maxWidth: "448px",  }}
       >
-       {children}
+        {children}
       </Modal>
     </>
   );
