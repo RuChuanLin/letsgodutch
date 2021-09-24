@@ -1,5 +1,5 @@
-import Input from "../../components/Input";
-import { filterParticipants } from "../../utils/common";
+import Input from "../../../components/Input";
+import { filterParticipants } from "../../../utils/common";
 
 const RecordCost = ({ formik }) => {
   const { participants } = formik.values;

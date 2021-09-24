@@ -7,21 +7,20 @@ import { fetchAllUsers } from "./actions/userAction";
 import DataTable from "./containers/DataTable";
 import Panel from "./containers/Panel";
 
-import FormikWizard from './containers/TestWizard'
+// import FormikWizard from './containers/Panel/AddNewRecord'
 
 const App = () => {
-  // const dispatch = useDispatch();
-  // useEffect(() => {
-  //   dispatch(fetchFocusRecord());
-  //   dispatch(fetchAllRecords());
-  //   dispatch(fetchAllUsers());
-  // }, [dispatch]);
+  const dispatch = useDispatch();
+  useEffect(() => {
+    dispatch(fetchFocusRecord());
+    dispatch(fetchAllRecords());
+    dispatch(fetchAllUsers());
+  }, []);
 
   return (
-    <>
-    <FormikWizard></FormikWizard>
-      {/* <Panel></Panel>
-      <DataTable></DataTable> */}
+    <> 
+      <Panel></Panel>
+      <DataTable></DataTable>
     </>
   );
 };

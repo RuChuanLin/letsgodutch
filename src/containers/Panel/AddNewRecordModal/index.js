@@ -1,5 +1,9 @@
-import { withFormik } from "formik";
-import * as Yup from "yup";
+import FormikWizard from "../../../components/FormikWizard";
+
+import SelectParticipants from "./SelectParticipants";
+import RecordCost from "./RecordCost";
+import SelectPayer from "./SelectPayer";
+import RecordOtherStuff from "./RecordOtherStuff";
 
 const initialValues = {
   delivery: {
@@ -38,18 +42,10 @@ const initialValues = {
   errorMsgs: [],
 };
 
-export default withFormik({
-  displayName: "WizardForm",
-  enableReinitialize: true,
-  mapPropsToValues: () => initialValues,
-  validationSchema: () =>
-    Yup.object().shape({
-      // errorMsgs: Yup.
-      // .required("First name is required"),
-      // email: Yup.string().required("Email is required"),
-      // addressLine1: Yup.string().required("Address Line 1 is required"),
-    }),
-  handleSubmit: (values) => {
-    console.log(values);
-  },
-});
+const components = [SelectParticipants, RecordCost, SelectPayer, RecordOtherStuff];
+
+function AddNewRecord() {
+  return <FormikWizard initialValues={initialValues} components={components}></FormikWizard>;
+}
+
+export default AddNewRecord;

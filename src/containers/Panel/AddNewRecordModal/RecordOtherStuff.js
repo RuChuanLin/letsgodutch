@@ -1,6 +1,6 @@
 import { produce } from "immer";
 
-import Input from "../../components/Input";
+import Input from "../../../components/Input";
 
 const SelectPayer = ({ formik }) => {
   // const { focusRecord, setFocusRecord } = props;

@@ -1,8 +1,9 @@
 import styled from "styled-components";
 
-import { colors } from "../../utils/colors";
+import { FastField } from "formik";
+import colors from "../../utils/colors";
 
-const StyledInput = styled.input`
+const StyledInput = styled(FastField)`
   outline: none;
   cursor: pointer;
   width: 155px;
@@ -34,10 +35,6 @@ const StyledInput = styled.input`
   }
 `;
 
-export default ({ type = "number", ...props }) => {
-  return (
-    <div>
-      <StyledInput type={type} {...props}></StyledInput>
-    </div>
-  );
-};
+export default ({ type = "number", ...props }) => (
+  <StyledInput type={type} {...props}></StyledInput>
+);

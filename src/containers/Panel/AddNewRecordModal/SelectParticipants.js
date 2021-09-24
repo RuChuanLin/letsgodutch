@@ -1,6 +1,6 @@
 import { Transfer } from "antd";
-import { filterParticipants } from "../../utils/common";
-import { updateState } from "../../utils/updateState";
+import { filterParticipants } from "../../../utils/common";
+import { updateState } from "../../../utils/updateState";
 import { produce } from "immer";
 
 const filterObject = (participants, filterKey) =>

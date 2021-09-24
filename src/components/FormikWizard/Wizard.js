@@ -69,9 +69,9 @@ const Wizard = (props) => {
         buttonsListComponent = cloneElement(child, {
           activeStepIndex: state.activeStepIndex,
           totalSteps: state.totalSteps,
-          onSubmit: onSubmit,
-          onNextStep: onNextStep,
-          onPreviousStep: onPreviousStep,
+          onSubmit,
+          onNextStep,
+          onPreviousStep,
           validators,
           ...otherProps,
         });

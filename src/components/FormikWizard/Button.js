@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import { Button, Tooltip } from "antd";
+import colors from "../../utils/colors";
 
 const WizardButton = ({ children, type, show, onClick, label, validator }) => {
   const errorMsgs = (validator && validator.call(null)?.errorMsgs) || [];
@@ -14,12 +15,8 @@ const WizardButton = ({ children, type, show, onClick, label, validator }) => {
       })
     ) : (
       <Tooltip
-        title={
-          errorMsgs && (
-            <span>{errorMsgs?.[0]}</span>
-          )
-        }
-        color="#f50"
+        title={errorMsgs && <span>{errorMsgs?.[0]}</span>}
+        color={colors.error}
         visible={tooltipVisible}
         onVisibleChange={(visible) => setTooltipVisible(visible && disabledNext)}
       >
