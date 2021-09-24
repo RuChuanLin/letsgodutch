@@ -7,8 +7,6 @@ import { fetchAllUsers } from "./actions/userAction";
 import DataTable from "./containers/DataTable";
 import Panel from "./containers/Panel";
 
-// import FormikWizard from './containers/Panel/AddNewRecord'
-
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {

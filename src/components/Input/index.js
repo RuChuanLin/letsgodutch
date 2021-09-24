@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import StyledInput from "./StyledInput";
+import Field from "./Field";
 import Text from "../../components/Text";
 
 const Wrapper = styled.div`
@@ -19,7 +19,7 @@ const InputItem = (props) => {
   return (
     <Wrapper width={width}>
       {text === "" ? <></> : <Text>{text}</Text>}
-      <StyledInput {...props}></StyledInput>
+      <Field {...props}></Field>
     </Wrapper>
   );
 };

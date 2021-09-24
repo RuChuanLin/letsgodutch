@@ -5,7 +5,6 @@ import { Typography } from "antd";
 const getX = (direction, actionPara) => 300 * direction * actionPara;
 
 const Step = ({ isActive, component, direction, ...props }) => {
-  console.log(props.formik.values);
   const y = direction === 0 ? 50 : -20;
   const transition = useTransition(isActive, {
     enter: { x: 0, y: 0, opacity: 1 },

@@ -1,49 +1,43 @@
 import { Transfer } from "antd";
 import { filterParticipants } from "../../../utils/common";
-import { updateState } from "../../../utils/updateState";
 import { produce } from "immer";
 
 const filterObject = (participants, filterKey) =>
   filterParticipants(participants, { filter: { [filterKey]: true } }).map(([name]) => name);
 
+const participantChangeHandler = (draft, options) => {
+  options.forEach(({ keys, action }) => {
+    const keySet = new Set(keys);
+    Object.entries(draft.participants).forEach(([name, obj]) => {
+      const included = keySet.has(name);
+      if (obj[action] !== included) {
+        draft.participants[name][action] = included;
+      }
+    });
+  });
+};
+
 const SelectParticipants = ({ formik }) => {
   const { participants } = formik.values;
-  const participantChangeHandler = (options) => {
-    const patchObject = {};
-    options.forEach(({ keys, action }) => {
-      const keySet = new Set(keys);
-      Object.entries(participants).forEach(([name, obj]) => {
-        const included = keySet.has(name);
-        if (obj[action] !== included) {
-          if (!patchObject[name]) {
-            patchObject[name] = {};
-          }
-          patchObject[name][action] = { $set: included };
-        }
-      });
-    });
-    return { participants: patchObject };
-  };
 
   const onChange = (nextTargetKeys) => {
-    // TODO 改成用 immer
-    updateState({
-      originalState: { participants },
-      updatedState: participantChangeHandler([
-        { keys: [], action: "selected" },
-        { keys: nextTargetKeys, action: "targeted" },
-      ]),
-      setState: formik.setValues,
-    });
+    formik.setValues(
+      produce(formik.values, (draft) => {
+        participantChangeHandler(draft, [
+          { keys: [], action: "selected" },
+          { keys: nextTargetKeys, action: "targeted" },
+        ]);
+      })
+    );
   };
 
   const onSelectChange = (sourceSelectedKeys, targetSelectedKeys) => {
     const selectedKeys = [...sourceSelectedKeys, ...targetSelectedKeys];
-    updateState({
-      originalState: { participants },
-      updatedState: participantChangeHandler([{ keys: selectedKeys, action: "selected" }]),
-      setState: formik.setValues,
-    });
+    formik.setValues(
+      produce(formik.values, (draft) => {
+        participantChangeHandler(draft, [{ keys: selectedKeys, action: "selected" }]);
+      })
+    );
   };
 
   return (
