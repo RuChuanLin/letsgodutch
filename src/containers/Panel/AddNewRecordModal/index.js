@@ -1,3 +1,5 @@
+import { useDispatch } from "react-redux";
+import { addNewRecord } from "../../../actions/recordAction";
 import Modal from "../../../components/Modal";
 
 import FormikWizard from "../../../components/FormikWizard";
@@ -42,15 +44,23 @@ const initialValues = {
     },
   },
   payer: "",
-  errorMsgs: [],
 };
 
 const components = [SelectParticipants, RecordCost, SelectPayer, RecordOtherStuff, ResultsPreview];
 
-const App = () => (
-  <Modal>
-    <FormikWizard initialValues={initialValues} components={components}></FormikWizard>
-  </Modal>
-);
+const App = () => {
+  const dispatch = useDispatch();
+  return (
+    <Modal>
+      <FormikWizard
+        initialValues={initialValues}
+        components={components}
+        onSubmit={(newRecord) => {
+          dispatch(addNewRecord({ newRecord, toCloud: true }));
+        }}
+      ></FormikWizard>
+    </Modal>
+  );
+};
 
 export default App;

@@ -1,4 +1,6 @@
 import React, { Children } from "react";
+
+import { RocketOutlined } from "@ant-design/icons";
 import styled from "styled-components";
 import PropTypes from "prop-types";
 import Button from "./Button";
@@ -17,49 +19,56 @@ const ButtonsList = ({
   onSubmit,
   children,
   validators,
-}) => (
-  <Wrapper>
-    {Children.map(children, (child) => {
-      const validator = validators[activeStepIndex];
-      if (child.type.displayName === "PreviousButton") {
-        return (
-          <Button
-            type="link"
-            show={activeStepIndex > 0}
-            onClick={onPreviousStep}
-            label="Previous"
-            {...child.props}
-          />
-        );
-      }
-      if (child.type.displayName === "NextButton") {
-        return (
-          <Button
-            type="primary"
-            show={activeStepIndex < totalSteps}
-            onClick={onNextStep}
-            validator={validator}
-            label="Next"
-            {...child.props}
-          />
-        );
-      }
-      if (child.type.displayName === "SubmitButton") {
-        return (
-          <Button
-            show={activeStepIndex === totalSteps}
-            onClick={onSubmit}
-            validator={validator}
-            type="submit"
-            label="Finish"
-            {...child.props}
-          />
-        );
-      }
-      return child;
-    })}
-  </Wrapper>
-);
+  ...formik
+}) => {  
+  return (
+    <Wrapper>
+      {Children.map(children, (child) => {
+        const validator = validators[activeStepIndex];
+        if (child.type.displayName === "PreviousButton") {
+          return (
+            <Button
+              type="link"
+              show={activeStepIndex > 0}
+              onClick={onPreviousStep}
+              label="上一步"
+              {...child.props}
+            />
+          );
+        }
+        if (child.type.displayName === "NextButton") {
+          return (
+            <Button
+              type="primary"
+              show={activeStepIndex < totalSteps}
+              onClick={onNextStep}
+              validator={validator}
+              label="下一步"
+              {...child.props}
+            />
+          );
+        }
+        if (child.type.displayName === "SubmitButton") {
+          return (
+            <Button
+              show={activeStepIndex === totalSteps}
+              onClick={formik.submitHandler}
+              validator={validator}
+              type="primary"
+              label={
+                <span>
+                  <RocketOutlined /> 送出
+                </span>
+              }
+              {...child.props}
+            />
+          );
+        }
+        return child;
+      })}
+    </Wrapper>
+  );
+};
 
 ButtonsList.propTypes = {
   activeStepIndex: PropTypes.number,

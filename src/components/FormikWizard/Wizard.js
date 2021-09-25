@@ -13,10 +13,11 @@ const getTotalSteps = (children) => {
   throw new Error("Require StepsList");
 };
 
-const Wizard = (props) => {
+const Wizard = ({ children, onSubmit, ...props }) => {
+  debugger;
   const [state, setState] = useState({
     activeStepIndex: 0,
-    totalSteps: getTotalSteps(props.children),
+    totalSteps: getTotalSteps(children),
     stepTabs: [],
     direction: 0,
   });
@@ -37,7 +38,19 @@ const Wizard = (props) => {
       })
     );
 
-  const onSubmit = () => console.log("submitted the form");
+  const submitHandler = onSubmit
+    ? () => {
+        onSubmit(props.values);
+        props.setIsModalVisible(false);
+        props.setValues(props.initialValues);
+        setState(
+          produce(state, (draft) => {
+            draft.activeStepIndex = 0;
+            draft.direction = 0;
+          })
+        );
+      }
+    : () => console.log("submitted the form");
 
   const updateStepTabs = (stepTabs) =>
     setState(
@@ -47,7 +60,6 @@ const Wizard = (props) => {
     );
 
   const getInitialComponents = () => {
-    const { children, ...otherProps } = props;
     let stepsComponent = null;
     let buttonsListComponent = null;
     let validators = [];
@@ -58,7 +70,7 @@ const Wizard = (props) => {
           activeStepIndex: state.activeStepIndex,
           updateStepTabs: updateStepTabs,
           direction: state.direction,
-          ...otherProps,
+          ...props,
         });
         if (child.props.validators) {
           // eslint-disable-next-line prefer-destructuring
@@ -69,11 +81,12 @@ const Wizard = (props) => {
         buttonsListComponent = cloneElement(child, {
           activeStepIndex: state.activeStepIndex,
           totalSteps: state.totalSteps,
-          onSubmit,
+          submitHandler,
+
           onNextStep,
           onPreviousStep,
           validators,
-          ...otherProps,
+          ...props,
         });
       }
     });

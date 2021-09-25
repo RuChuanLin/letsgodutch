@@ -81,7 +81,7 @@ const ResultsPreview = ({ formik }) => {
       ÷ {participantCount} = {Math.abs(sharedFee)}
       <br></br>
       <Typography.Text strong>備註：</Typography.Text>
-      {note ? note : <Typography.Text secondary>無備註</Typography.Text>}
+      {note ? note : <Typography.Text type="secondary">無備註</Typography.Text>}
       <Table
         scroll={{ y: 300 }}
         size="small"
@@ -99,10 +99,6 @@ const ResultsPreview = ({ formik }) => {
       ></Table>
     </>
   );
-};
-
-ResultsPreview.validate = (formik) => {
-  return true;
 };
 
 ResultsPreview.title = "結果預覽";

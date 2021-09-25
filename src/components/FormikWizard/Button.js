@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import { Button, Tooltip } from "antd";
 import colors from "../../utils/colors";
 
-const WizardButton = ({ children, type, show, onClick, label, validator }) => {
+const WizardButton = ({ children, type, show, onClick, label, validator, ...props }) => {
   const errorMsgs = (validator && validator.call(null)?.errorMsgs) || [];
   const [tooltipVisible, setTooltipVisible] = useState(false);
   const disabledNext = typeof validator === "function" && errorMsgs.length > 0;
@@ -24,6 +24,7 @@ const WizardButton = ({ children, type, show, onClick, label, validator }) => {
           disabled={disabledNext}
           type={type}
           onClick={!validator || validator.call(null) ? onClick : null}
+          {...props}
         >
           {label || "Next"}
         </Button>

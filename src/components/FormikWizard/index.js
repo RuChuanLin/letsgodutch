@@ -5,15 +5,16 @@ import Step from "./Step";
 import ButtonsList from "./ButtonsList";
 import PreviousButton from "./PreviousButton";
 import NextButton from "./NextButton";
+import SubmitButton from "./SubmitButton";
 
-function App({ components, initialValues }) {
+function App({ components, initialValues, onSubmit, ...props }) {
   return (
     <Formik initialValues={initialValues}>
       {(formik) => {
         const getValidators = (validatorFuncs) =>
           validatorFuncs.map((func) => () => func({ ...formik }));
         return (
-          <Wizard {...formik}>
+          <Wizard onSubmit={onSubmit} initialValues={initialValues} {...formik} {...props}>
             <StepsList
               validators={getValidators(components.map(({ validate }) => validate || (() => true)))}
             >
@@ -24,7 +25,7 @@ function App({ components, initialValues }) {
             <ButtonsList {...formik}>
               <PreviousButton />
               <NextButton />
-              {/* <SubmitButton /> */}
+              <SubmitButton />
             </ButtonsList>
           </Wizard>
         );

@@ -1,4 +1,3 @@
-import moment from "moment";
 import {
   FOCUS_RECORD__UPDATE_RECORD,
   FOCUS_RECORD__RESET_RECORD,
@@ -25,7 +24,7 @@ const initialState = {
 
 const reducer = (state = { ...initialState }, action) => {
   switch (action.type) {
-    case FOCUS_RECORD__UPDATE_RECORD:{
+    case FOCUS_RECORD__UPDATE_RECORD: {
       return update(state, action.payload);
     }
     case FOCUS_RECORD__RESET_RECORD:

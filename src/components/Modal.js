@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, Children, cloneElement } from "react";
 import { Modal, Button } from "antd";
 
 const CustomModal = ({ buttonTitle = "Open Modal", title, okFunction, children }) => {
@@ -17,6 +17,14 @@ const CustomModal = ({ buttonTitle = "Open Modal", title, okFunction, children }
     setIsModalVisible(false);
   };
 
+  const clonedChildren = () =>
+    Children.map(children, (child) =>
+      cloneElement(child, {
+        isModalVisible,
+        setIsModalVisible,
+      })
+    );
+
   return (
     <>
       <Button type="primary" onClick={showModal} style={{ marginRight: 12 }}>
@@ -29,9 +37,9 @@ const CustomModal = ({ buttonTitle = "Open Modal", title, okFunction, children }
         onCancel={handleCancel}
         footer={null}
         centered
-        style={{ overflow: "auto", maxWidth: "448px",  }}
+        style={{ overflow: "auto", maxWidth: "448px" }}
       >
-        {children}
+        {clonedChildren()}
       </Modal>
     </>
   );
