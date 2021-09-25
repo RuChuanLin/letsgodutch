@@ -1,6 +1,8 @@
 import { produce } from "immer";
 import { Radio, Space } from "antd";
 
+import { filterParticipants } from "../../../utils/common";
+
 const SelectPayer = ({ formik }) => {
   const { participants, payer } = formik.values;
   return (
@@ -17,13 +19,11 @@ const SelectPayer = ({ formik }) => {
         }}
       >
         <Space direction="vertical">
-          {Object.entries(participants)
-            .filter(([_, participant]) => participant.targeted)
-            .map(([name]) => (
-              <Radio.Button key={name} value={name}>
-                {name}
-              </Radio.Button>
-            ))}
+          {filterParticipants(participants).map(([name]) => (
+            <Radio.Button key={name} value={name}>
+              {name}
+            </Radio.Button>
+          ))}
         </Space>
       </Radio.Group>
     </>
@@ -33,9 +33,9 @@ const SelectPayer = ({ formik }) => {
 SelectPayer.validate = (formik) => {
   const errors = {};
   const errorMsgs = [];
-  const { payer } = formik.values;
+  const { payer, participants } = formik.values;
 
-  if (!payer) {
+  if (!payer || !participants[payer].targeted) {
     errorMsgs.push("請選擇付款人");
   }
 

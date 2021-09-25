@@ -1,7 +1,7 @@
 import React, { useState, Children, cloneElement } from "react";
 import { Modal, Button } from "antd";
 
-const CustomModal = ({ buttonTitle = "Open Modal", title, okFunction, children }) => {
+const CustomModal = ({ button, buttonTitle = "Open Modal", okFunction, children }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -27,11 +27,16 @@ const CustomModal = ({ buttonTitle = "Open Modal", title, okFunction, children }
 
   return (
     <>
-      <Button type="primary" onClick={showModal} style={{ marginRight: 12 }}>
-        {buttonTitle}
-      </Button>
+      {button ? (
+        cloneElement(button, {
+          onClick: showModal,
+        })
+      ) : (
+        <Button type="primary" onClick={showModal} style={{ marginRight: 12 }}>
+          {buttonTitle}
+        </Button>
+      )}
       <Modal
-        title={title}
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}

@@ -40,7 +40,7 @@ WizardButton.defaultProps = {
 WizardButton.propTypes = {
   show: PropTypes.bool,
   onClick: PropTypes.func,
-  label: PropTypes.string,
+  label: PropTypes.oneOfType([PropTypes.string, PropTypes.element]),
   validator: PropTypes.func,
   children: PropTypes.oneOfType([PropTypes.arrayOf(PropTypes.node), PropTypes.node]),
 };

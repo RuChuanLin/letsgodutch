@@ -1,9 +1,11 @@
-import React from "react";
+import { useDispatch } from "react-redux";
 
+import { addNewRecord } from "../../actions/recordAction";
 import AddUserModal from "./AddUserModal";
-import AddNewRecordModal from "./AddNewRecordModal";
+import AddNewRecordModal from "../_common/CURDRecordModal";
 
 const Panel = () => {
+  const dispatch = useDispatch();
   return (
     <div
       style={{
@@ -14,7 +16,12 @@ const Panel = () => {
       }}
     >
       <AddUserModal></AddUserModal>
-      <AddNewRecordModal></AddNewRecordModal>
+      <AddNewRecordModal
+        buttonTitle="新增一筆資料"
+        onSubmit={(record) => {
+          dispatch(addNewRecord({ newRecord: record }));
+        }}
+      ></AddNewRecordModal>
     </div>
   );
 };

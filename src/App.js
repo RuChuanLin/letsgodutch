@@ -3,7 +3,6 @@ import { useDispatch } from "react-redux";
 import { fetchAllRecords } from "./actions/recordAction";
 import { fetchFocusRecord } from "./actions/focusRecordAction";
 import { fetchAllUsers } from "./actions/userAction";
-
 import DataTable from "./containers/DataTable";
 import Panel from "./containers/Panel";
 
@@ -16,7 +15,7 @@ const App = () => {
   }, [dispatch]);
 
   return (
-    <> 
+    <>
       <Panel></Panel>
       <DataTable></DataTable>
     </>

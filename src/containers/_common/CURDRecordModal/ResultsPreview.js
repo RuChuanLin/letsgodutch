@@ -92,7 +92,7 @@ const ResultsPreview = ({ formik }) => {
           <Table.Summary fixed>
             <Table.Summary.Row>
               <Table.Summary.Cell index={0}>總額</Table.Summary.Cell>
-              <Table.Summary.Cell index={1}>{totalAmount}</Table.Summary.Cell>
+              <Table.Summary.Cell index={1}>{totalAmount + totalSharedFee}</Table.Summary.Cell>
             </Table.Summary.Row>
           </Table.Summary>
         )}

@@ -14,7 +14,6 @@ const getTotalSteps = (children) => {
 };
 
 const Wizard = ({ children, onSubmit, ...props }) => {
-  debugger;
   const [state, setState] = useState({
     activeStepIndex: 0,
     totalSteps: getTotalSteps(children),
@@ -50,7 +49,7 @@ const Wizard = ({ children, onSubmit, ...props }) => {
           })
         );
       }
-    : () => console.log("submitted the form");
+    : () => {};
 
   const updateStepTabs = (stepTabs) =>
     setState(

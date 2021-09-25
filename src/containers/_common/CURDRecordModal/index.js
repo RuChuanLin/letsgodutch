@@ -1,5 +1,3 @@
-import { useDispatch } from "react-redux";
-import { addNewRecord } from "../../../actions/recordAction";
 import Modal from "../../../components/Modal";
 
 import FormikWizard from "../../../components/FormikWizard";
@@ -10,7 +8,7 @@ import SelectPayer from "./SelectPayer";
 import RecordOtherStuff from "./RecordOtherStuff";
 import ResultsPreview from "./ResultsPreview";
 
-const initialValues = {
+const iniValues = {
   delivery: {
     fee: 0,
   },
@@ -48,19 +46,14 @@ const initialValues = {
 
 const components = [SelectParticipants, RecordCost, SelectPayer, RecordOtherStuff, ResultsPreview];
 
-const App = () => {
-  const dispatch = useDispatch();
-  return (
-    <Modal>
-      <FormikWizard
-        initialValues={initialValues}
-        components={components}
-        onSubmit={(newRecord) => {
-          dispatch(addNewRecord({ newRecord, toCloud: true }));
-        }}
-      ></FormikWizard>
-    </Modal>
-  );
-};
+const App = ({ initialValues = iniValues, button, buttonTitle = "新增一筆紀錄", onSubmit }) => (
+  <Modal button={button} buttonTitle={buttonTitle}>
+    <FormikWizard
+      initialValues={initialValues}
+      components={components}
+      onSubmit={onSubmit}
+    ></FormikWizard>
+  </Modal>
+);
 
 export default App;
