@@ -71,15 +71,17 @@ const ResultsPreview = ({ formik }) => {
     dataSource,
     columns,
   } = arrangeValues(values);
+  const { note } = values;
   return (
     <>
-      <Typography.Title level={5}>
-        {sharedFee < 0 ? "共享優惠" : "共同分擔"}：
-        <Tooltip title={`運費：${deliveryFee}，優惠：${discountAmount}`}>
-          <Typography.Link target="_blank">{Math.abs(totalSharedFee)}</Typography.Link>
-        </Tooltip>{" "}
-        ÷ {participantCount} = {Math.abs(sharedFee)}
-      </Typography.Title>
+      <Typography.Text strong>{sharedFee < 0 ? "共享優惠" : "共同分擔"}：</Typography.Text>
+      <Tooltip title={`運費：${deliveryFee}，優惠：${discountAmount}`}>
+        <Typography.Link target="_blank">{Math.abs(totalSharedFee)}</Typography.Link>
+      </Tooltip>{" "}
+      ÷ {participantCount} = {Math.abs(sharedFee)}
+      <br></br>
+      <Typography.Text strong>備註：</Typography.Text>
+      {note ? note : <Typography.Text secondary>無備註</Typography.Text>}
       <Table
         scroll={{ y: 300 }}
         size="small"

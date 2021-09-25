@@ -22,7 +22,7 @@ const SelectPayer = ({ formik }) => {
         placeholder="請輸入運費"
       ></Input>
       <Input
-        text="折扣"
+        text="優惠"
         value={discount?.amount || ""}
         onChange={(e) => {
           const { value } = e.target;
@@ -33,7 +33,7 @@ const SelectPayer = ({ formik }) => {
             })
           );
         }}
-        placeholder="請輸入折扣"
+        placeholder="請輸入優惠"
       ></Input>
       <Input
         type="text"
