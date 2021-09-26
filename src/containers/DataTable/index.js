@@ -124,6 +124,6 @@ const DataTable = () => {
   const records = useSelector((state) => state.records);
   const columns = generateColumns(records);
   const dataSource = generateDataSource(records, dispatch);
-  return <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 5 }}></Table>;
+  return <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 4 }}></Table>;
 };
 export default DataTable;
