@@ -1,5 +1,4 @@
 import { createStore, applyMiddleware } from "redux";
-// import focusRecord from "./reducers/focusRecordReducer";
 import records from "./reducers/recordReducer";
 import users from "./reducers/userReducer";
 
@@ -11,7 +10,6 @@ const loggerMiddleware = createLogger();
 
 const store = createStore(
   combineReducers({
-    // focusRecord,
     records,
     users,
   }),

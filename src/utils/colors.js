@@ -9,7 +9,7 @@ const white = "#FFFFFB";
 const black = "#080808";
 const getGray = (scale) => chroma.scale([white, black])(scale).hex();
 
-export default {
+const colors = {
   primaryBackground,
   primaryBackgroundDark,
   primaryBackgroundLight,
@@ -18,3 +18,5 @@ export default {
   white,
   getGray,
 };
+
+export default colors;

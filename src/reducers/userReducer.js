@@ -1,4 +1,4 @@
-import { USER__LOAD_ALL_USERS, USER__ADD_USER } from "../constants/userConst";
+import { USER__LOAD_ALL_USERS, USER__ADD_USER } from "../actions/userAction";
 const initialState = {};
 
 const reducer = (state = initialState, action) => {

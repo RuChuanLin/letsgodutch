@@ -15,7 +15,8 @@ const StepsList = (props) => {
         stepTabs.push({ title: child.props.title });
       }
     });
-    props.updateStepTabs(stepTabs);
+    props.updateStepTabs(stepTabs); 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const getStepChildren = () => {

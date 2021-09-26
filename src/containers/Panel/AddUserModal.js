@@ -1,6 +1,6 @@
 import * as yup from "yup";
 import styled from "styled-components";
-import { Select, Tooltip } from "antd";
+import { Select } from "antd";
 import { Formik, Form, ErrorMessage } from "formik";
 import { useSelector, useDispatch } from "react-redux";
 import { addUser } from "../../actions/userAction";
@@ -30,8 +30,6 @@ const AddUserModal = () => {
         {(formik) => {
           const {
             values: { userName },
-            errors,
-            touched,
           } = formik;
           return (
             <Form>

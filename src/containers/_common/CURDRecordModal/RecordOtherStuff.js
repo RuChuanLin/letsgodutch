@@ -3,7 +3,6 @@ import { produce } from "immer";
 import Input from "../../../components/Input";
 
 const SelectPayer = ({ formik }) => {
-  // const { focusRecord, setFocusRecord } = props;
   const { delivery, discount, note } = formik.values;
   return (
     <div>
