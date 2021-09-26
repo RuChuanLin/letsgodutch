@@ -26,6 +26,32 @@ const filterParticipants = (() => {
   };
 })();
 
+export const genNewRecordObject = (() => {
+  let [memoInitUsers, memoFinishedNewRecord] = [null, null];
+  return (users) => {
+    if (users !== memoInitUsers) {
+      memoInitUsers = users;
+      memoFinishedNewRecord = {
+        delivery: {
+          fee: 0,
+        },
+        discount: {
+          amount: 0,
+        },
+        participants: Object.keys(users).reduce(
+          (acc, name) => ({
+            ...acc,
+            [name]: { key: name, name, targeted: true, selected: false, cost: "" },
+          }),
+          {}
+        ),
+        payer: "",
+      };
+    }
+    return memoFinishedNewRecord;
+  };
+})();
+
 const fixNumber = (number, options = {}) => {
   const { fixDigit = 2 } = options;
   const nPowerOf10 = 10 ** fixDigit;

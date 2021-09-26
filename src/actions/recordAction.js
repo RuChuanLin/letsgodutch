@@ -1,6 +1,7 @@
 import moment from "moment";
 
 import { getRecordDB } from "../firebase";
+import { snapshots2Docs, snapshot2Data, getIdFromAddedObject } from "../utils/dbApiUnification";
 
 export const RECORDS__LOAD_ALL_RECORD = "RECORDS__LOAD_ALL_RECORD";
 export const RECORDS__ADD_RECORD = "RECORDS__ADD_RECORD";
@@ -16,8 +17,10 @@ export const fetchAllRecords =
         .orderBy("date", "desc")
         .get()
         .then((snapshots) => {
-          const allRecords = snapshots.docs.map((snapshot) => ({
-            ...snapshot.data(),
+          const docs = snapshots2Docs(snapshots);
+          const allRecords = docs.map((snapshot) => ({
+
+            ...snapshot2Data(snapshot),
             id: snapshot.id,
           }));
           dispatch({ type: RECORDS__LOAD_ALL_RECORD, payload: allRecords });
@@ -29,13 +32,14 @@ export const fetchAllRecords =
 
 export const addNewRecord =
   ({ toCloud = true, newRecord }) =>
-  async (dispatch, getState) => {
+  async (dispatch) => {
     if (!newRecord) {
       return;
     }
     const arrangedRecord = { ...newRecord, date: new moment().valueOf() };
     if (toCloud) {
-      const { id } = await getRecordDB().add(arrangedRecord);
+      const addedObject = await getRecordDB().add(arrangedRecord);
+      const id = getIdFromAddedObject(addedObject);
       dispatch({ type: RECORDS__ADD_RECORD, payload: { ...arrangedRecord, id } });
     } else {
       dispatch({ type: RECORDS__ADD_RECORD, payload: arrangedRecord });
