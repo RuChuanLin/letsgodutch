@@ -72,7 +72,7 @@ const generateDataSource = (events, dispatch) => {
           <AddNewRecordModal
             initialValues={event}
             button={
-              <Tooltip title="編輯此筆紀錄" placement="bottomLeft">
+              <Tooltip title="編輯此筆記錄" placement="bottomLeft">
                 <IconButton>
                   <EditTwoTone twoToneColor="#5b0" />
                 </IconButton>
@@ -85,10 +85,10 @@ const generateDataSource = (events, dispatch) => {
             Update
           </AddNewRecordModal>
           <Popconfirm
-            popconfirmTitle="即將刪除此筆紀錄"
+            popconfirmTitle="即將刪除此筆記錄"
             onConfirm={() => dispatch(removeRecord(id))}
           >
-            <Tooltip title="刪除此筆紀錄" placement="bottomLeft">
+            <Tooltip title="刪除此筆記錄" placement="bottomLeft">
               <IconButton>
                 <DeleteTwoTone twoToneColor="#f50" />
               </IconButton>

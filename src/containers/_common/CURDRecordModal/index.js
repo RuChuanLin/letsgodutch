@@ -10,7 +10,7 @@ import ResultsPreview from "./ResultsPreview";
 
 const components = [SelectParticipants, RecordCost, SelectPayer, RecordOtherStuff, ResultsPreview];
 
-const App = ({ initialValues, button, buttonTitle = "新增一筆紀錄", onSubmit }) => (
+const App = ({ initialValues, button, buttonTitle = "新增一筆記錄", onSubmit }) => (
   <Modal button={button} buttonTitle={buttonTitle}>
     <FormikWizard
       initialValues={initialValues}
