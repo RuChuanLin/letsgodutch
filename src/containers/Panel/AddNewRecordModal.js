@@ -7,7 +7,6 @@ const AddNewRecordModal = () => {
   const users = useSelector((state) => state.users);
 
   const initNewRecord = genNewRecordObject(users);
-  console.log(initNewRecord);
   const dispatch = useDispatch();
 
   return (
@@ -15,7 +14,7 @@ const AddNewRecordModal = () => {
       initialValues={initNewRecord}
       buttonTitle="新增一筆資料"
       onSubmit={(record) => {
-        dispatch(addNewRecord({ newRecord: record }));
+        dispatch(addNewRecord(record));
       }}
     ></CURDRecordModal>
   );
