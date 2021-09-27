@@ -1,7 +1,19 @@
 import React, { useState, Children, cloneElement } from "react";
 import { Modal, Button } from "antd";
+import styled from "styled-components";
 
-const CustomModal = ({ button, buttonTitle = "Open Modal", okFunction, children }) => {
+const StyledModal = styled(Modal)`
+    &::-webkit-scrollbar {
+        display: none;
+    }
+`;
+
+const CustomModal = ({
+    button,
+    buttonTitle = "Open Modal",
+    okFunction,
+    children,
+}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -36,7 +48,7 @@ const CustomModal = ({ button, buttonTitle = "Open Modal", okFunction, children 
           {buttonTitle}
         </Button>
       )}
-      <Modal
+            <StyledModal
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -45,7 +57,7 @@ const CustomModal = ({ button, buttonTitle = "Open Modal", okFunction, children 
         style={{ overflow: "auto", maxWidth: "448px" }}
       >
         {clonedChildren()}
-      </Modal>
+            </StyledModal>
     </>
   );
 };
