@@ -15,7 +15,7 @@ const AddNewRecordModal = () => {
       initialValues={initNewRecord}
       buttonTitle="新增一筆資料"
       onSubmit={(record) => {
-        dispatch(addNewRecord({ newRecord: record }));
+        dispatch(addNewRecord(record));
       }}
     ></CURDRecordModal>
   );

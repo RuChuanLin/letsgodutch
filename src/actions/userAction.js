@@ -1,5 +1,5 @@
 import moment from "moment";
-
+import { nanoid } from "nanoid";
 import { getUserDB } from "../firebase";
 import { snapshots2Docs, snapshot2Data } from "../utils/dbApiUnification";
 export const USER__LOAD_ALL_USERS = "USER__LOAD_ALL_USERS";
@@ -24,19 +24,19 @@ export const fetchAllUsers =
 
 export const addUser =
   ({ userName } = {}) =>
-  (dispatch) => {
+  async (dispatch) => {
     if (userName) {
+      const id = nanoid();
       const nameObject = {
         name: userName,
         date: new moment().valueOf(),
+        id,
       };
-      getUserDB()
-        .add(nameObject)
-        .then(() => {
-          dispatch({
-            type: USER__ADD_USER,
-            payload: { ...nameObject },
-          });
-        });
+
+      await getUserDB().doc(id).set(nameObject);
+      dispatch({
+        type: USER__ADD_USER,
+        payload: { ...nameObject },
+      });
     }
   };
