@@ -17,7 +17,6 @@ export const fetchAllRecords =
         .orderBy("date", "desc")
         .get()
         .then((snapshots) => {
-          console.log(snapshots)
           const docs = snapshots2Docs(snapshots);
           const allRecords = docs.map((snapshot) => ({
             ...snapshot2Data(snapshot),
