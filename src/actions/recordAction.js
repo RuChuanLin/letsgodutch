@@ -1,7 +1,7 @@
 import moment from "moment";
 import { nanoid } from "nanoid";
 import { getRecordDB } from "../firebase";
-import { snapshots2Docs, snapshot2Data, getIdFromAddedObject } from "../utils/dbApiUnification";
+import { snapshots2Docs, snapshot2Data } from "../utils/dbApiUnification";
 
 export const RECORDS__LOAD_ALL_RECORD = "RECORDS__LOAD_ALL_RECORD";
 export const RECORDS__ADD_RECORD = "RECORDS__ADD_RECORD";
