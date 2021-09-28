@@ -1,5 +1,5 @@
 import moment from "moment";
-
+import { nanoid } from "nanoid";
 import { getRecordDB } from "../firebase";
 import { snapshots2Docs, snapshot2Data, getIdFromAddedObject } from "../utils/dbApiUnification";
 
@@ -19,7 +19,6 @@ export const fetchAllRecords =
         .then((snapshots) => {
           const docs = snapshots2Docs(snapshots);
           const allRecords = docs.map((snapshot) => ({
-
             ...snapshot2Data(snapshot),
             id: snapshot.id,
           }));
@@ -30,21 +29,15 @@ export const fetchAllRecords =
     }
   };
 
-export const addNewRecord =
-  ({ toCloud = true, newRecord }) =>
-  async (dispatch) => {
-    if (!newRecord) {
-      return;
-    }
-    const arrangedRecord = { ...newRecord, date: new moment().valueOf() };
-    if (toCloud) {
-      const addedObject = await getRecordDB().add(arrangedRecord);
-      const id = getIdFromAddedObject(addedObject);
-      dispatch({ type: RECORDS__ADD_RECORD, payload: { ...arrangedRecord, id } });
-    } else {
-      dispatch({ type: RECORDS__ADD_RECORD, payload: arrangedRecord });
-    }
-  };
+export const addNewRecord = (newRecord) => async (dispatch) => {
+  if (!newRecord) {
+    return;
+  }
+  const id = nanoid();
+  const arrangedRecord = { ...newRecord, date: new moment().valueOf(), id };
+  const { data } = await getRecordDB().doc(id).set(arrangedRecord);
+  dispatch({ type: RECORDS__ADD_RECORD, payload: data });
+};
 
 export const updateRecord = (recordId, updatedRecord) => async (dispatch) => {
   try {

@@ -1,5 +1,5 @@
 {
-  "name": "bookkeeping",
+  "name": "letsgodutch",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
@@ -14,6 +14,7 @@
     "gh-pages": "^3.2.3",
     "immer": "^9.0.6",
     "localbase": "^0.7.5",
+    "nanoid": "^3.1.28",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-firebase-hooks": "^3.0.4",
@@ -34,7 +35,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "gh-pages -d build"
+    "deploy": "node ./deploy.js"
   },
   "eslintConfig": {
     "extends": [
