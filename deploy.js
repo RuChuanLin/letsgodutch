@@ -9,7 +9,7 @@ fs.readFile(deployFolder + "/index.html", "utf8", (err, content) => {
     return;
   }
   console.log("讀取成功，開始替代檔案引用路徑");
-  const replacedContent = content.replaceAll(`href="/`, `href="./`).replaceAll(`src="/`, `src="./`);
+  const replacedContent = content.replace(/href=\"\//g, `href="./`).replace(/src=\"\//g, `src="./`);
   fs.writeFile(deployFolder + "/index.html", replacedContent, function (err) {
     if (err) {
       console.log("錯誤發生：" + err);
