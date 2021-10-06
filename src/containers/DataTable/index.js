@@ -1,4 +1,5 @@
 import moment from "moment";
+import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
 import { Table, Tooltip, Typography } from "antd";
 import { DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
@@ -12,22 +13,38 @@ import AddNewRecordModal from "../_common/CURDRecordModal";
 import Popconfirm from "../../components/Popconfirm";
 import IconButton from "../../components/IconButton";
 
+import colors from "../../utils/colors";
+
+const BalanceSpan = styled.span`
+  position: absolute;
+  background: ${(props) => props.bgc};
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`;
+
 const generateColumns = (events) => {
   const totalCostAmount = generateTotalCostAmount(events);
   const participants = Object.keys(totalCostAmount).map((participant) => {
+    const balance = fixNumber(totalCostAmount[participant]);
     return {
       title: participant,
       render: (cost) => cost || 0,
       children: [
         {
-          title: fixNumber(totalCostAmount[participant]),
+          title: <BalanceSpan bgc={colors.getbalanceColor(balance)}>{balance}</BalanceSpan>,
           dataIndex: participant,
           key: participant,
         },
       ],
+      balance,
     };
   });
-  participants.sort((a, b) => a.children[0].title - b.children[0].title);
+  participants.sort((a, b) => a.balance - b.balance);
   return [
     {
       title: "日期",
@@ -61,8 +78,6 @@ const generateDataSource = (events, dispatch) => {
         }),
         {}
       );
-    console.log(participants);
-    console.log(arrangedParticipants);
     return {
       key: `${i + 1}`,
       date: moment(date).format("M / D"),

@@ -8,6 +8,8 @@ const error = "#f50";
 const white = "#FFFFFB";
 const black = "#080808";
 const getGray = (scale) => chroma.scale([white, black])(scale).hex();
+const getbalanceColor = (balance) =>
+  chroma.scale(["#ecd", "#fff", "#ced"]).domain([-1000, 1000])(balance).hex();
 
 const colors = {
   primaryBackground,
@@ -17,6 +19,7 @@ const colors = {
   error,
   white,
   getGray,
+  getbalanceColor
 };
 
 export default colors;
