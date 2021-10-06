@@ -1,6 +1,6 @@
 import moment from "moment";
 import { useSelector, useDispatch } from "react-redux";
-import { Table, Tooltip } from "antd";
+import { Table, Tooltip, Typography } from "antd";
 import { DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
 
 import { removeRecord, updateRecord } from "../../actions/recordAction";
@@ -49,18 +49,26 @@ const generateDataSource = (events, dispatch) => {
     const { date, participants, payer, delivery, discount, note, id } = event;
     const deliveryFee = delivery?.fee || 0;
     const discountAmount = discount?.amount || 0;
+    const arrangedParticipants = Object.entries(participants)
+      .map(([name, { cost, targeted }]) => ({
+        name,
+        cost: targeted ? cost : <Typography.Text disabled>無參加</Typography.Text>,
+      }))
+      .reduce(
+        (acc, { name, cost }) => ({
+          ...acc,
+          ...{ [name]: cost },
+        }),
+        {}
+      );
+    console.log(participants);
+    console.log(arrangedParticipants);
     return {
       key: `${i + 1}`,
       date: moment(date).format("M / D"),
       payer,
       discountAmount,
-      ...filterParticipants(participants).reduce(
-        (acc, [name, obj]) => ({
-          ...acc,
-          ...{ [name]: obj?.cost || 0 },
-        }),
-        {}
-      ),
+      ...arrangedParticipants,
       deliveryFee,
       totalAmount: filterParticipants(participants).reduce(
         (acc, [_, { cost = 0 }]) => acc + cost,
