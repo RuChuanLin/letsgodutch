@@ -35,8 +35,13 @@ export const addNewRecord = (newRecord) => async (dispatch) => {
   }
   const id = nanoid();
   const arrangedRecord = { ...newRecord, date: new moment().valueOf(), id };
-  const { data } = await getRecordDB().doc(id).set(arrangedRecord);
-  dispatch({ type: RECORDS__ADD_RECORD, payload: data });
+  try {
+    await getRecordDB().doc(id).set(arrangedRecord);
+    dispatch({ type: RECORDS__ADD_RECORD, payload: arrangedRecord });
+  } catch (e) {
+    // TODO 錯誤處理
+    // dispatch({ type: RECORDS__ADD_RECORD, payload: arrangedRecord });
+  }
 };
 
 export const updateRecord = (recordId, updatedRecord) => async (dispatch) => {
