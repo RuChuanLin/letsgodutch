@@ -6,8 +6,8 @@
  * note: this function use a memorization to minimize the amount of calculation.
  */
 const filterParticipants = (() => {
-  let [memoIniObject, memoFinishedObject] = [null, null];
-  let [memoIniOptionsObject] = [null];
+  let [memoIniObject, memoFinishedObject] = [{}, []];
+  let [memoIniOptionsObject] = [{}];
   return (
     participantObject,
     options = {
@@ -27,7 +27,7 @@ const filterParticipants = (() => {
 })();
 
 export const genNewRecordObject = (() => {
-  let [memoInitUsers, memoFinishedNewRecord] = [null, null];
+  let [memoInitUsers, memoFinishedNewRecord] = [{}, {}];
   return (users) => {
     if (users !== memoInitUsers) {
       memoInitUsers = users;
