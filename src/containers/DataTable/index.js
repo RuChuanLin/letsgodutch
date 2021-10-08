@@ -5,14 +5,13 @@ import { Table, Tooltip, Typography } from "antd";
 import { DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
 
 import { removeRecord, updateRecord } from "../../actions/recordAction";
-import { fixNumber } from "../../utils/common";
+import { fixNumber, filterParticipants} from "../../utils/common";
 
-import { filterParticipants } from "../../utils/common";
 import AddNewRecordModal from "../_common/CURDRecordModal";
 
 import Popconfirm from "../../components/Popconfirm";
 import IconButton from "../../components/IconButton";
-
+import { volcano, green } from "@ant-design/colors";
 import colors from "../../utils/colors";
 
 const BalanceSpan = styled.span`
@@ -23,9 +22,12 @@ const BalanceSpan = styled.span`
   width: 100%;
   height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  padding-left: 16px;
 `;
+
+const { Text, Link } = Typography;
 
 const generateColumns = (events) => {
   const totalCostAmount = generateTotalCostAmount(events);
@@ -50,14 +52,25 @@ const generateColumns = (events) => {
       title: "日期",
       dataIndex: "date",
       key: "date",
+      width: 80,
+      fixed: "left",
     },
-    { title: "付款人", dataIndex: "payer", key: "payer" },
-    { title: "運費", dataIndex: "deliveryFee", key: "deliveryFee" },
-    { title: "優惠", dataIndex: "discountAmount", key: "discountAmount" },
+    { title: "付款人", dataIndex: "payer", key: "payer", width: 100, fixed: "left" },
+    { title: "共享", dataIndex: "sharingFee", key: "sharingFee", width: 80, fixed: "left" },
     ...participants,
-    { title: "總額", dataIndex: "totalAmount", key: "totalAmount" },
-    { title: "備註", dataIndex: "note", key: "note" },
-    { title: "Action", dataIndex: "action", key: "action", width: "100px" },
+    { title: "總額", dataIndex: "totalAmount", key: "totalAmount", fixed: "right", width: 75 },
+    {
+      title: "備註",
+      dataIndex: "note",
+      key: "note",
+      ellipsis: {
+        showTitle: false,
+      },
+      render: (note) => <Tooltip title={note}>{note}</Tooltip>,
+      width: 175,
+      fixed: "right",
+    },
+    { title: "Action", dataIndex: "action", key: "action", width: 100, fixed: "right" },
   ];
 };
 
@@ -66,10 +79,11 @@ const generateDataSource = (events, dispatch) => {
     const { date, participants, payer, delivery, discount, note, id } = event;
     const deliveryFee = delivery?.fee || 0;
     const discountAmount = discount?.amount || 0;
+    const sharingFee = discountAmount - deliveryFee;
     const arrangedParticipants = Object.entries(participants)
       .map(([name, { cost, targeted }]) => ({
         name,
-        cost: targeted ? cost : <Typography.Text disabled>無參加</Typography.Text>,
+        cost: targeted ? cost : <Text type="secondary">無參加</Text>,
       }))
       .reduce(
         (acc, { name, cost }) => ({
@@ -81,6 +95,18 @@ const generateDataSource = (events, dispatch) => {
     return {
       key: `${i + 1}`,
       date: moment(date).format("M / D"),
+      sharingFee: (
+        <Tooltip
+          title={
+            <div>
+              <p style={{ color: volcano[1], margin: 0 }}>運費：{deliveryFee}</p>
+              <p style={{ color: green[1], margin: 0 }}>優惠：{discountAmount}</p>
+            </div>
+          }
+        >
+          <Link>{sharingFee}</Link>
+        </Tooltip>
+      ),
       payer,
       discountAmount,
       ...arrangedParticipants,
@@ -97,7 +123,7 @@ const generateDataSource = (events, dispatch) => {
             button={
               <Tooltip title="編輯此筆記錄" placement="bottomLeft">
                 <IconButton>
-                  <EditTwoTone twoToneColor="#5b0" />
+                  <EditTwoTone twoToneColor={green[5]} />
                 </IconButton>
               </Tooltip>
             }
@@ -113,7 +139,7 @@ const generateDataSource = (events, dispatch) => {
           >
             <Tooltip title="刪除此筆記錄" placement="bottomLeft">
               <IconButton>
-                <DeleteTwoTone twoToneColor="#f50" />
+                <DeleteTwoTone twoToneColor={volcano[5]} />
               </IconButton>
             </Tooltip>
           </Popconfirm>
@@ -147,6 +173,13 @@ const DataTable = () => {
   const records = useSelector((state) => state.records);
   const columns = generateColumns(records);
   const dataSource = generateDataSource(records, dispatch);
-  return <Table dataSource={dataSource} columns={columns} pagination={{ pageSize: 4 }}></Table>;
+  return (
+    <Table
+      dataSource={dataSource}
+      columns={columns}
+      scroll={{ x:  1000}}
+      pagination={{ pageSize: 4 }}
+    ></Table>
+  );
 };
 export default DataTable;

@@ -1,4 +1,5 @@
 import chroma from "chroma-js";
+import {red, green} from '@ant-design/colors'
 
 const primaryBackground = "#1890ff";
 const primaryBackgroundDark = chroma(primaryBackground).darken(0.3).hex();
@@ -9,7 +10,7 @@ const white = "#FFFFFB";
 const black = "#080808";
 const getGray = (scale) => chroma.scale([white, black])(scale).hex();
 const getbalanceColor = (balance) =>
-  chroma.scale(["#ecd", "#fff", "#ced"]).domain([-1000, 1000])(balance).hex();
+  chroma.scale([red[2], "#fff", green[2]]).domain([-1000, 1000])(balance).hex();
 
 const colors = {
   primaryBackground,
