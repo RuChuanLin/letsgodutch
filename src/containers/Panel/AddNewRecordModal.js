@@ -4,7 +4,7 @@ import { addNewRecord } from "../../redux/record/action";
 import { genNewRecordObject } from "../../utils/common";
 
 const AddNewRecordModal = () => {
-  const users = useSelector((state) => state.users);
+  const users = useSelector((state) => state?.users?.data || {});
 
   const initNewRecord = genNewRecordObject(users);
   const dispatch = useDispatch();

@@ -3,14 +3,13 @@ import { nanoid } from "nanoid";
 import { getRecordDB } from "../../firebase";
 import actionCreator from "../utils/actionCreator";
 
-export const RECORDS__LOAD_ALL_RECORD = "RECORDS__LOAD_ALL_RECORD";
 export const RECORDS__ADD_RECORD = "RECORDS__ADD_RECORD";
 export const RECORDS__UPDATE_RECORD = "RECORDS__UPDATE_RECORD";
 export const RECORDS__REMOVE_RECORD = "RECORDS__REMOVE_RECORD";
 
-export const fetchAllRecordsActions = actionCreator("RECORDS__LOAD_ALL_RECORD");
+export const loadAllRecordsActions = actionCreator("RECORDS__LOAD_ALL_RECORD");
 
-export const { request: fetchAllRecords } = fetchAllRecordsActions;
+export const { request: loadAllRecords } = loadAllRecordsActions;
 
 
 export const addNewRecord = (newRecord) => async (dispatch) => {

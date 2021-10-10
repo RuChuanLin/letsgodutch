@@ -1,6 +1,6 @@
 import { createStore, applyMiddleware } from "redux";
 import records from "./record/reducer";
-import users from "./reducers/userReducer";
+import users from "./user/reducer";
 
 // import thunkMiddleware from "redux-thunk";
 import createSagaMiddleware from "redux-saga";

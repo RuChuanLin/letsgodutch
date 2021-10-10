@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Select } from "antd";
 import { Formik, Form, ErrorMessage } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { addUser } from "../../redux/actions/userAction";
+import { addUser } from "../../redux/user/action";
 import Modal from "../../components/Modal";
 import Input from "../../components/Input";
 import Button from "../../components/Button";
@@ -15,7 +15,8 @@ const Wrapper = styled.div`
 `;
 
 const AddUserModal = () => {
-  const users = useSelector((state) => state.users);
+  const userData = useSelector((state) => state?.users || {});
+  const { isLoading, data: users } = userData;
   const dispatch = useDispatch();
   return (
     <Modal buttonTitle="新增使用者" title="新增使用者">
@@ -52,6 +53,7 @@ const AddUserModal = () => {
               </Wrapper>
               <Wrapper>
                 <Button
+                  loading={isLoading}
                   type="primary"
                   onClick={() => {
                     dispatch(addUser({ userName }));

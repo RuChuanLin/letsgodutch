@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { fetchAllRecords } from "./redux/record/action";
-import { fetchAllUsers } from "./redux/actions/userAction";
+import { loadAllRecords } from "./redux/record/action";
+import { loadAllUsers } from "./redux/user/action";
 import DataTable from "./containers/DataTable";
 import Panel from "./containers/Panel";
 
 const App = () => {
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchAllRecords());
-    // dispatch(fetchAllUsers());
+    dispatch(loadAllRecords());
+    dispatch(loadAllUsers());
   }, [dispatch]);
 
   return (

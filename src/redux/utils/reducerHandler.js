@@ -1,4 +1,4 @@
-const reducerHandler = (state, action) => {
+const reducerHandler = (state, action, data) => {
   switch (action.httpState) {
     case "REQUEST":
       return {
@@ -8,17 +8,15 @@ const reducerHandler = (state, action) => {
     case "SUCCESS":
       return {
         ...state,
+        data: data ? data : action.data,
         isLoading: false,
-        loaded: true,
-        data: action.data,
         error: null,
       };
     case "FAILURE":
       return {
         ...state,
         isLoading: false,
-        loaded: true,
-        error: action.data,
+        error: data ? data : action.data,
         data: null,
       };
     default:
