@@ -1,11 +1,11 @@
 import moment from "moment";
 import styled from "styled-components";
 import { useSelector, useDispatch } from "react-redux";
-import { Table, Tooltip, Typography } from "antd";
+import { Table, Tooltip, Typography, Spin } from "antd";
 import { DeleteTwoTone, EditTwoTone } from "@ant-design/icons";
 
-import { removeRecord, updateRecord } from "../../actions/recordAction";
-import { fixNumber, filterParticipants} from "../../utils/common";
+import { removeRecord, updateRecord } from "../../redux/record/action";
+import { fixNumber, filterParticipants } from "../../utils/common";
 
 import AddNewRecordModal from "../_common/CURDRecordModal";
 
@@ -170,16 +170,18 @@ const generateTotalCostAmount = (events) =>
 
 const DataTable = () => {
   const dispatch = useDispatch();
-  const records = useSelector((state) => state.records);
+  const {data: records, isLoading} = useSelector((state) => state.records);
   const columns = generateColumns(records);
   const dataSource = generateDataSource(records, dispatch);
   return (
-    <Table
-      dataSource={dataSource}
-      columns={columns}
-      scroll={{ x:  1000}}
-      pagination={{ pageSize: 4 }}
-    ></Table>
+    <Spin spinning={isLoading}>
+      <Table
+        dataSource={dataSource}
+        columns={columns}
+        scroll={{ x: 1000 }}
+        pagination={{ pageSize: 4 }}
+      ></Table>
+    </Spin>
   );
 };
 export default DataTable;

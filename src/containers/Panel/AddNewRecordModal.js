@@ -1,6 +1,6 @@
 import CURDRecordModal from "../_common/CURDRecordModal";
 import { useSelector, useDispatch } from "react-redux";
-import { addNewRecord } from "../../actions/recordAction";
+import { addNewRecord } from "../../redux/record/action";
 import { genNewRecordObject } from "../../utils/common";
 
 const AddNewRecordModal = () => {

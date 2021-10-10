@@ -1,33 +1,17 @@
 import moment from "moment";
 import { nanoid } from "nanoid";
-import { getRecordDB } from "../firebase";
-import { snapshots2Docs, snapshot2Data } from "../utils/dbApiUnification";
+import { getRecordDB } from "../../firebase";
+import actionCreator from "../utils/actionCreator";
 
 export const RECORDS__LOAD_ALL_RECORD = "RECORDS__LOAD_ALL_RECORD";
 export const RECORDS__ADD_RECORD = "RECORDS__ADD_RECORD";
 export const RECORDS__UPDATE_RECORD = "RECORDS__UPDATE_RECORD";
 export const RECORDS__REMOVE_RECORD = "RECORDS__REMOVE_RECORD";
 
-export const fetchAllRecords =
-  ({ force } = {}) =>
-  (dispatch, getState) => {
-    const { records } = getState();
-    if (records.length === 0 || force) {
-      getRecordDB()
-        .orderBy("date", "desc")
-        .get()
-        .then((snapshots) => {
-          const docs = snapshots2Docs(snapshots);
-          const allRecords = docs.map((snapshot) => ({
-            ...snapshot2Data(snapshot),
-            id: snapshot.id,
-          }));
-          dispatch({ type: RECORDS__LOAD_ALL_RECORD, payload: allRecords });
-        });
-    } else {
-      dispatch({ type: RECORDS__LOAD_ALL_RECORD, payload: records });
-    }
-  };
+export const fetchAllRecordsActions = actionCreator("RECORDS__LOAD_ALL_RECORD");
+
+export const { request: fetchAllRecords } = fetchAllRecordsActions;
+
 
 export const addNewRecord = (newRecord) => async (dispatch) => {
   if (!newRecord) {

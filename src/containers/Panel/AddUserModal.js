@@ -3,7 +3,7 @@ import styled from "styled-components";
 import { Select } from "antd";
 import { Formik, Form, ErrorMessage } from "formik";
 import { useSelector, useDispatch } from "react-redux";
-import { addUser } from "../../actions/userAction";
+import { addUser } from "../../redux/actions/userAction";
 import Modal from "../../components/Modal";
 import Input from "../../components/Input";
 import Button from "../../components/Button";

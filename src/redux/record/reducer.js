@@ -1,13 +1,27 @@
+import { produce } from "immer";
+
+import reducerHandler from "../utils/reducerHander";
+
 import {
   RECORDS__LOAD_ALL_RECORD,
   RECORDS__ADD_RECORD,
   RECORDS__UPDATE_RECORD,
   RECORDS__REMOVE_RECORD,
-} from "../actions/recordAction";
-const initialState = [];
+  fetchAllRecordsActions,
+} from "./action";
+const initialState = { data: [] };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case fetchAllRecordsActions.REQUEST:
+    case fetchAllRecordsActions.SUCCESS:
+    case fetchAllRecordsActions.FAILURE:
+      return reducerHandler(state, action);
+
+    // {
+    //   ...state,
+    //   usersList: reducerHandler(state, action, getUsersList),
+    // };
     case RECORDS__ADD_RECORD:
       return [action.payload, ...state];
     case RECORDS__LOAD_ALL_RECORD:
