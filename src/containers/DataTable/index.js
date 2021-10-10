@@ -128,14 +128,14 @@ const generateDataSource = (events, dispatch) => {
               </Tooltip>
             }
             onSubmit={(record) => {
-              dispatch(updateRecord(record.id, record));
+              dispatch(updateRecord({ recordId: record.id, updatedRecord: record }));
             }}
           >
             Update
           </AddNewRecordModal>
           <Popconfirm
             popconfirmTitle="即將刪除此筆記錄"
-            onConfirm={() => dispatch(removeRecord(id))}
+            onConfirm={() => dispatch(removeRecord({removingId : id}))}
           >
             <Tooltip title="刪除此筆記錄" placement="bottomLeft">
               <IconButton>
@@ -170,7 +170,7 @@ const generateTotalCostAmount = (events) =>
 
 const DataTable = () => {
   const dispatch = useDispatch();
-  const {data: records, loading} = useSelector((state) => state.records);
+  const { data: records, loading } = useSelector((state) => state.records);
   const columns = generateColumns(records);
   const dataSource = generateDataSource(records, dispatch);
   return (

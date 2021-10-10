@@ -1,10 +1,14 @@
 import moment from "moment";
 import { nanoid } from "nanoid";
 import { all, takeLatest, put, select } from "redux-saga/effects";
-import { produce } from "immer";
 import { snapshots2Docs, snapshot2Data } from "../../utils/dbApiUnification";
 
-import { loadAllRecordsActions, addNewRecordActions } from "./action";
+import {
+  loadAllRecordsActions,
+  addNewRecordActions,
+  updateRecordActions,
+  removeRecordActions,
+} from "./action";
 import { getRecordDB } from "../../firebase";
 
 function* loadAllRecords() {
@@ -38,9 +42,35 @@ function* addNewRecord({ data: newRecord }) {
   }
 }
 
+function* updateRecord({ data }) {
+  const { recordId, updatedRecord } = data;
+  const allRecords = yield select((state) => state?.records?.data || []);
+  try {
+    yield getRecordDB().doc(recordId).set(updatedRecord);
+    yield put(
+      updateRecordActions.success(
+        allRecords.map((record) => (record.id === recordId ? updatedRecord : record))
+      )
+    );
+  } catch (e) {}
+}
+
+function* removeRecord({ data }) {
+  const { removingId } = data;
+  const allRecords = yield select((state) => state?.records?.data || []);
+  try {
+    yield getRecordDB().doc(removingId).delete();
+    yield put(removeRecordActions.success(allRecords.filter(({ id }) => id !== removingId)));
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 export default function* recordSaga() {
   yield all([
     takeLatest(loadAllRecordsActions.REQUEST, loadAllRecords),
     takeLatest(addNewRecordActions.REQUEST, addNewRecord),
+    takeLatest(updateRecordActions.REQUEST, updateRecord),
+    takeLatest(removeRecordActions.REQUEST, removeRecord),
   ]);
 }
