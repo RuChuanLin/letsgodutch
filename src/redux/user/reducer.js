@@ -1,4 +1,4 @@
-import { produce } from "immer";
+
 
 import { loadAllUsersActions, addUserActions } from "./action";
 import reducerHandler from "../utils/reducerHandler";
@@ -11,18 +11,18 @@ const reducer = (state = initialState, action) => {
     case loadAllUsersActions.SUCCESS:
     case loadAllUsersActions.FAILURE:
     case addUserActions.REQUEST:
+    case addUserActions.SUCCESS:
     case addUserActions.FAILURE:
       return reducerHandler(state, action);
 
-    case addUserActions.SUCCESS:
-      return reducerHandler(
-        state,
-        action,
-        produce(state.data, (draft) => {
-          draft[action.data.name] = action.data;
-        }),
-        action
-      );
+    // return reducerHandler(
+    //   state,
+    //   action,
+    //   produce(state.data, (draft) => {
+    //     draft[action.data.name] = action.data;
+    //   }),
+    //   action
+    // );
     default:
       return state;
   }

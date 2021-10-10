@@ -3,19 +3,19 @@ const reducerHandler = (state, action, data) => {
     case "REQUEST":
       return {
         ...state,
-        isLoading: true,
+        loading: true,
       };
     case "SUCCESS":
       return {
         ...state,
         data: data ? data : action.data,
-        isLoading: false,
+        loading: false,
         error: null,
       };
     case "FAILURE":
       return {
         ...state,
-        isLoading: false,
+        loading: false,
         error: data ? data : action.data,
         data: null,
       };

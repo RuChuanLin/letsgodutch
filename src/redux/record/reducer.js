@@ -3,10 +3,10 @@ import { produce } from "immer";
 import reducerHandler from "../utils/reducerHandler";
 
 import {
-  RECORDS__ADD_RECORD,
   RECORDS__UPDATE_RECORD,
   RECORDS__REMOVE_RECORD,
   loadAllRecordsActions,
+  addNewRecordActions,
 } from "./action";
 const initialState = { data: [] };
 
@@ -15,10 +15,10 @@ const reducer = (state = initialState, action) => {
     case loadAllRecordsActions.REQUEST:
     case loadAllRecordsActions.SUCCESS:
     case loadAllRecordsActions.FAILURE:
+    case addNewRecordActions.REQUEST:
+    case addNewRecordActions.SUCCESS:
+    case addNewRecordActions.FAILURE:
       return reducerHandler(state, action);
-
-    case RECORDS__ADD_RECORD:
-      return [action.payload, ...state];
 
     case RECORDS__UPDATE_RECORD: {
       const { recordId, updatedRecord } = action.payload;

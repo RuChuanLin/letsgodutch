@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 
 const AddUserModal = () => {
   const userData = useSelector((state) => state?.users || {});
-  const { isLoading, data: users } = userData;
+  const { loading, data: users } = userData;
   const dispatch = useDispatch();
   return (
     <Modal buttonTitle="新增使用者" title="新增使用者">
@@ -53,7 +53,7 @@ const AddUserModal = () => {
               </Wrapper>
               <Wrapper>
                 <Button
-                  loading={isLoading}
+                  loading={loading}
                   type="primary"
                   onClick={() => {
                     dispatch(addUser({ userName }));

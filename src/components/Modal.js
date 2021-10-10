@@ -3,17 +3,12 @@ import { Modal, Button } from "antd";
 import styled from "styled-components";
 
 const StyledModal = styled(Modal)`
-    &::-webkit-scrollbar {
-        display: none;
-    }
+  &::-webkit-scrollbar {
+    display: none;
+  }
 `;
 
-const CustomModal = ({
-    button,
-    buttonTitle = "Open Modal",
-    okFunction,
-    children,
-}) => {
+const CustomModal = ({ button, buttonTitle = "Open Modal", okFunction, loading, children }) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -48,7 +43,7 @@ const CustomModal = ({
           {buttonTitle}
         </Button>
       )}
-            <StyledModal
+      <StyledModal
         visible={isModalVisible}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -57,7 +52,7 @@ const CustomModal = ({
         style={{ overflow: "auto", maxWidth: "448px" }}
       >
         {clonedChildren()}
-            </StyledModal>
+      </StyledModal>
     </>
   );
 };

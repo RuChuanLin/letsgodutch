@@ -170,11 +170,11 @@ const generateTotalCostAmount = (events) =>
 
 const DataTable = () => {
   const dispatch = useDispatch();
-  const {data: records, isLoading} = useSelector((state) => state.records);
+  const {data: records, loading} = useSelector((state) => state.records);
   const columns = generateColumns(records);
   const dataSource = generateDataSource(records, dispatch);
   return (
-    <Spin spinning={isLoading}>
+    <Spin spinning={loading}>
       <Table
         dataSource={dataSource}
         columns={columns}

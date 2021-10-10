@@ -1,6 +1,7 @@
 import moment from "moment";
+import { produce } from "immer";
 import { nanoid } from "nanoid";
-import { all, takeLatest, put } from "redux-saga/effects";
+import { all, takeLatest, put, select } from "redux-saga/effects";
 import { snapshots2Docs, snapshot2Data } from "../../utils/dbApiUnification";
 import { getUserDB } from "../../firebase";
 import { loadAllUsersActions, addUserActions } from "./action";
@@ -21,15 +22,22 @@ function* loadAllUsers() {
 function* addUser({ data }) {
   const { userName } = data;
   if (userName) {
+    const users = yield select((state) => state?.users?.data);
     try {
       const id = nanoid();
-      const nameObject = {
+      const userObject = {
         name: userName,
         date: new moment().valueOf(),
         id,
       };
-      yield getUserDB().doc(id).set(nameObject);
-      yield put(addUserActions.success(nameObject));
+      yield getUserDB().doc(id).set(userObject);
+      yield put(
+        addUserActions.success(
+          produce(users, (draft) => {
+            draft[userName] = userObject;
+          })
+        )
+      );
     } catch (err) {
       yield put(addUserActions.failure(err));
     }
@@ -37,6 +45,8 @@ function* addUser({ data }) {
 }
 
 export default function* recordSaga() {
-  yield all([takeLatest(loadAllUsersActions.REQUEST, loadAllUsers)]);
-  yield all([takeLatest(addUserActions.REQUEST, addUser)]);
+  yield all([
+    takeLatest(loadAllUsersActions.REQUEST, loadAllUsers),
+    takeLatest(addUserActions.REQUEST, addUser),
+  ]);
 }

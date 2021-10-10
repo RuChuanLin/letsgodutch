@@ -5,6 +5,7 @@ import { genNewRecordObject } from "../../utils/common";
 
 const AddNewRecordModal = () => {
   const users = useSelector((state) => state?.users?.data || {});
+  const loading = useSelector((state) => state?.record?.loading || false);
 
   const initNewRecord = genNewRecordObject(users);
   const dispatch = useDispatch();
@@ -16,6 +17,7 @@ const AddNewRecordModal = () => {
       onSubmit={(record) => {
         dispatch(addNewRecord(record));
       }}
+      loading={loading}
     ></CURDRecordModal>
   );
 };
