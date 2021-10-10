@@ -36,7 +36,8 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "deploy": "node ./deploy.js"
+    "deploy": "npm run build && npm run deploy-only",
+    "deploy-only" : "node ./deploy.js"
   },
   "eslintConfig": {
     "extends": [
