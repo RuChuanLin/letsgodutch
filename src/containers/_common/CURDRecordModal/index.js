@@ -10,20 +10,13 @@ import ResultsPreview from "./ResultsPreview";
 
 const components = [SelectParticipants, RecordCost, SelectPayer, RecordOtherStuff, ResultsPreview];
 
-const CURDRecordModal = ({
-  initialValues,
-  button,
-  buttonTitle = "新增一筆記錄",
-  onSubmit,
-  isLoading = false,
-}) => {
+const CURDRecordModal = ({ initialValues, button, buttonTitle = "新增一筆記錄", onSubmit }) => {
   return (
-    <Modal button={button} buttonTitle={buttonTitle} isLoading={isLoading}>
+    <Modal button={button} buttonTitle={buttonTitle}>
       <FormikWizard
         initialValues={initialValues}
         components={components}
         onSubmit={onSubmit}
-        isLoading={isLoading}
       ></FormikWizard>
     </Modal>
   );

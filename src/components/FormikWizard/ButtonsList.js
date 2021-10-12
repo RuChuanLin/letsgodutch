@@ -19,7 +19,6 @@ const ButtonsList = ({
   onSubmit,
   children,
   validators,
-  loading,
   ...formik
 }) => {
   return (
@@ -56,7 +55,6 @@ const ButtonsList = ({
               onClick={formik.submitHandler}
               validator={validator}
               type="primary"
-              loading={loading}
               label={
                 <span>
                   <RocketOutlined /> 送出
