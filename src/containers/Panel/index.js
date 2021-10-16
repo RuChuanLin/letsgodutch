@@ -1,5 +1,6 @@
 import AddUserModal from "./AddUserModal";
 import AddNewRecordModal from "./AddNewRecordModal";
+import TransferMoney from './TransferMoney'
 
 const Panel = () => {
   return (
@@ -11,6 +12,7 @@ const Panel = () => {
         justifyContent: "flex-end",
       }}
     >
+      <TransferMoney></TransferMoney>
       <AddUserModal></AddUserModal>
       <AddNewRecordModal></AddNewRecordModal>
     </div>

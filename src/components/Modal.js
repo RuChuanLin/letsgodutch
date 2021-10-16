@@ -1,5 +1,5 @@
 import React, { useState, Children, cloneElement } from "react";
-import { Modal, Button } from "antd";
+import { Modal, Button, Spin } from "antd";
 import styled from "styled-components";
 
 const StyledModal = styled(Modal)`
@@ -51,7 +51,7 @@ const CustomModal = ({ button, buttonTitle = "Open Modal", okFunction, loading, 
         centered
         style={{ overflow: "auto", maxWidth: "448px" }}
       >
-        {clonedChildren()}
+        <Spin spinning={loading}>{clonedChildren()}</Spin>
       </StyledModal>
     </>
   );
