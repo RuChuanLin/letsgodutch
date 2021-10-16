@@ -1,3 +1,4 @@
+import { produce } from "immer";
 import { useSelector, useDispatch } from "react-redux";
 import TransferMoneyModal from "../_common/TransferMoneyModal";
 import { addNewRecord } from "../../redux/record/action";
@@ -16,7 +17,19 @@ const TransferMoney = () => {
       buttonTitle="轉錢"
       loading={loading}
       onSubmit={(record) => {
-        dispatch(addNewRecord(record));
+        const { payer, payee, transferAmount } = record;
+        const resultRecord = produce(initNewTransferRecord, (draft) => {
+          Object.entries(draft.participants).forEach(([name, obj]) => {
+            if (name !== payee && name !== payer) {
+              obj.targeted = false;
+            }
+          });
+          draft.participants[payee].cost = transferAmount;
+          draft.participants[payer].cost = 0;
+          draft.payer = payer;
+        });
+        console.log(resultRecord);
+        dispatch(addNewRecord(resultRecord));
       }}
     ></TransferMoneyModal>
   );

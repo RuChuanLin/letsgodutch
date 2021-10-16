@@ -16,7 +16,6 @@ import colors from "../../utils/colors";
 
 const BalanceSpan = styled.span`
   position: absolute;
-  background: ${(props) => props.bgc};
   top: 0;
   left: 0;
   width: 100%;
@@ -38,7 +37,11 @@ const generateColumns = (events) => {
       render: (cost) => cost || 0,
       children: [
         {
-          title: <BalanceSpan bgc={colors.getbalanceColor(balance)}>{balance}</BalanceSpan>,
+          title: (
+            <BalanceSpan style={{ background: colors.getbalanceColor(balance) }}>
+              {balance}
+            </BalanceSpan>
+          ),
           dataIndex: participant,
           key: participant,
         },
@@ -135,7 +138,7 @@ const generateDataSource = (events, dispatch) => {
           </AddNewRecordModal>
           <Popconfirm
             popconfirmTitle="即將刪除此筆記錄"
-            onConfirm={() => dispatch(removeRecord({removingId : id}))}
+            onConfirm={() => dispatch(removeRecord({ removingId: id }))}
           >
             <Tooltip title="刪除此筆記錄" placement="bottomLeft">
               <IconButton>

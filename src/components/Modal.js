@@ -8,7 +8,13 @@ const StyledModal = styled(Modal)`
   }
 `;
 
-const CustomModal = ({ button, buttonTitle = "Open Modal", okFunction, loading, children }) => {
+const CustomModal = ({
+  button,
+  buttonTitle = "Open Modal",
+  okFunction,
+  loading = false,
+  children,
+}) => {
   const [isModalVisible, setIsModalVisible] = useState(false);
 
   const showModal = () => {
@@ -39,7 +45,7 @@ const CustomModal = ({ button, buttonTitle = "Open Modal", okFunction, loading, 
           onClick: showModal,
         })
       ) : (
-        <Button type="primary" onClick={showModal} style={{ marginRight: 12 }}>
+        <Button loading={loading} type="primary" onClick={showModal} style={{ marginRight: 12 }}>
           {buttonTitle}
         </Button>
       )}

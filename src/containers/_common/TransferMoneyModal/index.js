@@ -1,22 +1,25 @@
-import { Spin } from "antd";
 import Modal from "../../../components/Modal";
 
 import FormikWizard from "../../../components/FormikWizard";
 
-import SelectPayer from "./SelectPayer";
-import SelectPayee from "./SelectPayee";
-// import RecordCost from "./RecordCost";
-// import SelectPayer from "./SelectPayer";
-// import RecordOtherStuff from "./RecordOtherStuff";
-// import ResultsPreview from "./ResultsPreview";
+import RecordInfo from "./RecordInfo";
 
-const components = [SelectPayer, SelectPayee];
+const components = [RecordInfo];
+
+const addNecessaryAttributions = (initialValues) => ({
+  participants: initialValues.participants,
+  payer: "",
+  payee: "",
+  transferAmount: "",
+});
 
 const TransferMoneyModal = ({ loading, initialValues, button, buttonTitle = "轉錢", onSubmit }) => {
+  const values = addNecessaryAttributions(initialValues);
+  
   return (
     <Modal loading={loading} button={button} buttonTitle={buttonTitle}>
       <FormikWizard
-        initialValues={initialValues}
+        initialValues={values}
         components={components}
         onSubmit={onSubmit}
       ></FormikWizard>

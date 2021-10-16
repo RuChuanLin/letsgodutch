@@ -7,7 +7,7 @@ import PreviousButton from "./PreviousButton";
 import NextButton from "./NextButton";
 import SubmitButton from "./SubmitButton";
 
-function App({ components, initialValues, onSubmit, ...props }) {
+function App({ components, initialValues, validationSchema, onSubmit, ...props }) {
   return (
     <Formik initialValues={initialValues}>
       {(formik) => {
