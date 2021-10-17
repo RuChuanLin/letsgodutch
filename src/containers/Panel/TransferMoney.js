@@ -27,6 +27,7 @@ const TransferMoney = () => {
           draft.participants[payee].cost = transferAmount;
           draft.participants[payer].cost = 0;
           draft.payer = payer;
+          draft.note = `${payer}轉給${payee} ${transferAmount}元`;
         });
         console.log(resultRecord);
         dispatch(addNewRecord(resultRecord));
