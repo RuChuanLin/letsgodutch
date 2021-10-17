@@ -2,6 +2,24 @@ import React, { useState, Children, cloneElement } from "react";
 import { Modal, Button, Spin } from "antd";
 import styled from "styled-components";
 
+const StyledButton = styled(Button)`
+  color: #eee;
+  margin-right: 16px;
+  border-radius: 16px;
+  &:hover {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.2);
+  }
+  &:active {
+    color: #fff;
+    background: rgba(255, 255, 255, 0.4);
+    box-shadow: rgba(255, 255, 255, 0.7) 0px 0px 8px 4px;
+  }
+  &:focus {
+    color: #eee;
+  }
+`;
+
 const StyledModal = styled(Modal)`
   &::-webkit-scrollbar {
     display: none;
@@ -45,9 +63,9 @@ const CustomModal = ({
           onClick: showModal,
         })
       ) : (
-        <Button loading={loading} type="primary" onClick={showModal} style={{ marginRight: 12 }}>
+        <StyledButton loading={loading} type="text" onClick={showModal}>
           {buttonTitle}
-        </Button>
+        </StyledButton>
       )}
       <StyledModal
         visible={isModalVisible}

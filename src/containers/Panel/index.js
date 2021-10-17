@@ -7,7 +7,7 @@ const Panel = () => {
     <div
       style={{
         display: "flex",
-        height: "50px",
+        height: "100%",
         alignItems: "center",
         justifyContent: "flex-end",
       }}
