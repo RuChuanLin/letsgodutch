@@ -108,6 +108,6 @@ SelectPayer.validate = (formik) => {
   return errors;
 };
 
-SelectPayer.title = "請填寫借／還錢資訊";
+SelectPayer.title = "請填寫轉錢資訊";
 
 export default SelectPayer;
