@@ -88,7 +88,7 @@ const generateColumns = (records) => {
       fixed: "left",
     },
     ...participants,
-    { title: "總額", dataIndex: "totalAmount", key: "totalAmount", fixed: "right", width: 75 },
+    { title: "總額", dataIndex: "totalAmount", key: "totalAmount", fixed: "right", width: 100 },
     {
       title: "備註",
       dataIndex: "note",
