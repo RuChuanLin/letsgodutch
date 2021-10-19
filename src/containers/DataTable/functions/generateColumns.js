@@ -64,6 +64,9 @@ const generateColumns = (records) => {
       key: "date",
       width: 80,
       fixed: "left",
+      defaultSortOrder: "descend",
+      sorter: (a, b) => a.date.date - b.date.date,
+      sortDirections: ["ascend"],
       render: ({ date }) => {
         const $moment = moment(date);
         return <Tooltip title={$moment.format("yyyy-M-D H:mm")}>{$moment.format("M/D")}</Tooltip>;
@@ -75,7 +78,7 @@ const generateColumns = (records) => {
       key: "payer",
       width: 100,
       fixed: "left",
-      render: ({payer}) => payer,
+      render: ({ payer }) => payer,
     },
     {
       title: "共享",
