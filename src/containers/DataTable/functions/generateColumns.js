@@ -51,6 +51,7 @@ const generateColumns = (records) => {
           ),
           dataIndex: participant,
           key: participant,
+          width: 100,
         },
       ],
       balance,
