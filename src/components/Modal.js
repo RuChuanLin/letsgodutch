@@ -4,15 +4,17 @@ import styled from "styled-components";
 
 const StyledButton = styled(Button)`
   color: #eee;
-  margin-right: 16px;
+  margin-right: 8px;
+  height: 48px;
   border-radius: 16px;
   &:hover {
     color: #fff;
     background: rgba(255, 255, 255, 0.2);
+    box-shadow: rgba(255, 255, 255, 0.3) 0px 0px 8px 0px;
   }
   &:active {
     color: #fff;
-    background: rgba(255, 255, 255, 0.4);
+    background: rgba(255, 255, 255, 0.1);
     box-shadow: rgba(255, 255, 255, 0.7) 0px 0px 8px 4px;
   }
   &:focus {
