@@ -6,6 +6,7 @@ import "firebase/database";
 const urlSearchParams = new URLSearchParams(window.location.search);
 const configs = Object.fromEntries(urlSearchParams.entries());
 
+let usingLocalDB = false;
 let db = null;
 if (configs.apiKey && configs.authDomain && configs.projectId) {
   try {
@@ -15,7 +16,9 @@ if (configs.apiKey && configs.authDomain && configs.projectId) {
     db = new Localbase("db");
   }
 } else {
+  usingLocalDB = true;
   db = new Localbase("db");
 }
 
+export { usingLocalDB };
 export default db;
