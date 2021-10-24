@@ -20,7 +20,7 @@
     "react-dom": "^17.0.2",
     "react-firebase-hooks": "^3.0.4",
     "react-redux": "^7.2.4",
-    "react-router-dom": "^5.2.0",
+    "react-router-dom": "^5.3.0",
     "react-scripts": "^4.0.3",
     "react-spring": "^9.2.4",
     "react-step-wizard": "^5.3.9",
@@ -37,7 +37,7 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "deploy": "npm run build && npm run deploy-only",
-    "deploy-only" : "node ./deploy.js"
+    "deploy-only": "node ./deploy.js"
   },
   "eslintConfig": {
     "extends": [

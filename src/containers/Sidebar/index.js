@@ -1,20 +1,44 @@
 import { useState } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 
 import { Menu, Layout } from "antd";
-
 import {
-  DesktopOutlined,
   PieChartOutlined,
-  FileOutlined,
-  TeamOutlined,
+  TransactionOutlined,
   UserOutlined,
+  SettingOutlined,
 } from "@ant-design/icons";
-
 const { Sider } = Layout;
-const { SubMenu } = Menu;
+
+const urls = [
+  {
+    url: "/",
+    name: "帳務計算",
+    icon: <PieChartOutlined />,
+  },
+  {
+    url: "/transfer-money",
+    name: "轉錢",
+    icon: <TransactionOutlined />,
+  },
+  {
+    url: "/manage-user",
+    name: "管理使用者",
+    icon: <UserOutlined />,
+  },
+  {
+    url: "/settings",
+    name: "設定",
+    icon: <SettingOutlined />,
+  },
+];
 
 const Sidebar = () => {
   const [collapsed, setCollapsed] = useState(true);
+
+  const history = useHistory();
+  const location = useLocation();
+
   return (
     <Sider
       theme="light"
@@ -23,25 +47,12 @@ const Sidebar = () => {
       onCollapse={() => setCollapsed(!collapsed)}
     >
       <div className="logo" />
-      <Menu theme="light" defaultSelectedKeys={["1"]} mode="inline">
-        <Menu.Item key="1" icon={<PieChartOutlined />}>
-          Option 1
-        </Menu.Item>
-        <Menu.Item key="2" icon={<DesktopOutlined />}>
-          Option 2
-        </Menu.Item>
-        <SubMenu key="sub1" icon={<UserOutlined />} title="User">
-          <Menu.Item key="3">Tom</Menu.Item>
-          <Menu.Item key="4">Bill</Menu.Item>
-          <Menu.Item key="5">Alex</Menu.Item>
-        </SubMenu>
-        <SubMenu key="sub2" icon={<TeamOutlined />} title="Team">
-          <Menu.Item key="6">Team 1</Menu.Item>
-          <Menu.Item key="8">Team 2</Menu.Item>
-        </SubMenu>
-        <Menu.Item key="9" icon={<FileOutlined />}>
-          Files
-        </Menu.Item>
+      <Menu theme="light" defaultSelectedKeys={location.pathname} mode="inline">
+        {urls.map(({ url, name, icon }) => (
+          <Menu.Item key={url} icon={icon} onClick={() => history.push(url)}>
+            {name}
+          </Menu.Item>
+        ))}
       </Menu>
     </Sider>
   );
